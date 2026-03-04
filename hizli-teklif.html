@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hızlı Teklif Al | VÖRK KITCHEN</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red: #E63946;
+            --black: #000000;
+            --off-white: #F5F5F0;
+            --yellow: #FFD60A;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--off-white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3 { 
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        
+        header {
+            background: var(--black);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--red);
+        }
+        
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            color: var(--yellow);
+            text-decoration: none;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--off-white);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .back-link:hover { color: var(--yellow); }
+        
+        .hero {
+            background: var(--red);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--black);
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 2rem 4rem;
+        }
+        
+        .card {
+            background: white;
+            border: 3px solid var(--black);
+            padding: 3rem;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.1);
+        }
+        
+        .step {
+            display: none;
+        }
+        
+        .step.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .progress::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: rgba(0,0,0,0.2);
+            z-index: 0;
+        }
+        
+        .progress-fill {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            height: 3px;
+            background: var(--red);
+            width: 0%;
+            transition: width 0.4s;
+            z-index: 0;
+        }
+        
+        .progress-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .progress-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--off-white);
+            border: 3px solid rgba(0,0,0,0.2);
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        
+        .progress-item.active .progress-circle {
+            background: var(--red);
+            border-color: var(--black);
+            transform: scale(1.1);
+        }
+        
+        .progress-item.completed .progress-circle {
+            background: var(--black);
+            color: var(--yellow);
+            border-color: var(--black);
+        }
+        
+        .progress-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            opacity: 0.6;
+        }
+        
+        .progress-item.active .progress-label {
+            opacity: 1;
+            color: var(--red);
+        }
+        
+        .subtitle {
+            color: var(--red);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        
+        .target-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .target-card {
+            background: var(--off-white);
+            border: 3px solid var(--black);
+            padding: 2rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .target-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 6px 6px 0 var(--black);
+            border-color: var(--red);
+        }
+        
+        .target-card.selected {
+            background: var(--red) !important;
+            transform: translateY(-5px);
+            box-shadow: 6px 6px 0 var(--black);
+        }
+        
+        .icon { font-size: 3rem; margin-bottom: 1rem; }
+        
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+        
+        .required { color: var(--red); }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 3px solid var(--black);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            background: var(--off-white);
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--red);
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0 var(--black);
+        }
+        
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .checkbox-item input {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            text-transform: none;
+            font-size: 0.9rem;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 1rem 2rem;
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            border: 3px solid var(--black);
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+            font-size: 1rem;
+        }
+        
+        .btn:hover:not(:disabled) {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary {
+            background: var(--yellow);
+            color: var(--black);
+            flex: 1;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--black);
+        }
+        
+        .btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: #ccc;
+        }
+        
+        .success {
+            text-align: center;
+            padding: 3rem;
+            display: none;
+        }
+        
+        .success.active { display: block; }
+        
+        .success-icon {
+            font-size: 5rem;
+            color: var(--red);
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background: var(--black);
+            color: var(--off-white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+        
+        @media (max-width: 768px) {
+            .target-grid { grid-template-columns: 1fr; }
+            .card { padding: 2rem 1.5rem; }
+            .form-actions { flex-direction: column-reverse; }
+            .btn { width: 100%; }
+            .progress-circle { width: 35px; height: 35px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">VÖRK KITCHEN</a>
+        <br>
+        <a href="/" class="back-link">← Ana Sayfaya Dön</a>
+    </header>
+    
+    <section class="hero">
+        <h1>HIZLI TEKLİF AL</h1>
+        <p>Projeniz için detaylı bilgi verin, 48 saat içinde teklif hazırlayalım.</p>
+    </section>
+    
+    <div class="container">
+        <div class="progress" id="progress">
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="progress-item active">
+                <div class="progress-circle">1</div>
+                <div class="progress-label">Hedef Kitle</div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-circle">2</div>
+                <div class="progress-label">Proje Detayı</div>
+            </div>
+            <div class="progress-item">
+                <div class="progress-circle">3</div>
+                <div class="progress-label">İletişim</div>
+            </div>
+        </div>
+        
+        <form id="mainForm" action="https://formsubmit.co/el/gehozu" method="POST">
+            <input type="hidden" name="_subject" value="VÖRK - Yeni Teklif Talebi">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="target_type" id="targetType">
+            
+            <!-- STEP 1 -->
+            <div class="step active" data-step="1">
+                <div class="card">
+                    <h2>SİZ KİMSİNİZ?</h2>
+                    <p class="subtitle">İşletme türünüzü seçin</p>
+                    
+                    <div class="target-grid">
+                        <div class="target-card" onclick="selectTarget(this, 'restaurant')">
+                            <div class="icon">🍽️</div>
+                            <h3>RESTORAN / KAFE</h3>
+                            <p>Yiyecek-içecek işletmesi</p>
+                        </div>
+                        
+                        <div class="target-card" onclick="selectTarget(this, 'startup')">
+                            <div class="icon">🚀</div>
+                            <h3>STARTUP</h3>
+                            <p>Girişim, teknoloji</p>
+                        </div>
+                        
+                        <div class="target-card" onclick="selectTarget(this, 'producer')">
+                            <div class="icon">🥫</div>
+                            <h3>GIDA ÜRETİCİSİ</h3>
+                            <p>Yerel, organik üretim</p>
+                        </div>
+                        
+                        <div class="target-card" onclick="selectTarget(this, 'other')">
+                            <div class="icon">💼</div>
+                            <h3>DİĞER</h3>
+                            <p>Farklı bir sektör</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- STEP 2 -->
+            <div class="step" data-step="2">
+                <div class="card">
+                    <div id="dynamicForm"></div>
+                </div>
+            </div>
+            
+            <!-- STEP 3 -->
+            <div class="step" data-step="3">
+                <div class="card">
+                    <h2>İLETİŞİM BİLGİLERİ</h2>
+                    <p class="subtitle">Size nasıl ulaşalım?</p>
+                    
+                    <div class="form-group">
+                        <label>AD SOYAD <span class="required">*</span></label>
+                        <input type="text" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>E-POSTA <span class="required">*</span></label>
+                        <input type="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>TELEFON <span class="required">*</span></label>
+                        <input type="tel" name="phone" required placeholder="+90">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>ŞİRKET / İŞLETME ADI</label>
+                        <input type="text" name="company">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>ŞEHİR</label>
+                        <input type="text" name="city" placeholder="Örn: İzmir">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>BİZİ NEREDEN DUYDUNUZ?</label>
+                        <select name="source">
+                            <option value="">Seçiniz</option>
+                            <option value="google">Google</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="linkedin">LinkedIn</option>
+                            <option value="tavsiye">Tavsiye</option>
+                            <option value="diger">Diğer</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Form Actions -->
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" id="prevBtn" style="display:none;" onclick="prevStep()">← GERİ</button>
+                <button type="button" class="btn btn-primary" id="nextBtn" disabled onclick="nextStep()">İLERİ →</button>
+            </div>
+        </form>
+        
+        <!-- Success -->
+        <div class="success" id="successMsg">
+            <div class="card">
+                <div class="success-icon">✓</div>
+                <h2>BAŞVURUNUZ ALINDI!</h2>
+                <p>Teşekkürler! Detaylı teklifimizi <strong>48 saat içinde</strong> göndereceğiz.</p>
+                <p style="margin-top: 1rem;">Acil durum: <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4322202a2537262f26312f2a03242e222a2f6d202c2e">[email&#160;protected]</a></strong></p>
+                <a href="/" class="btn btn-primary" style="display:inline-block; text-decoration:none; margin-top:2rem;">ANA SAYFAYA DÖN</a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2026 VÖRK KITCHEN | Marka Mühendisliği</p>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        let currentStep = 1;
+        let selectedType = '';
+        
+        const forms = {
+            restaurant: `
+                <h2>PROJE DETAYLARI</h2>
+                <p class="subtitle">Restoranınız hakkında bilgi verin</p>
+                
+                <div class="form-group">
+                    <label>İŞLETME DURUMU <span class="required">*</span></label>
+                    <select name="status" required>
+                        <option value="">Seçiniz</option>
+                        <option value="yeni">Henüz açmadım, yeni açacağım</option>
+                        <option value="acik">Zaten açığım, yenilenmek istiyorum</option>
+                        <option value="konsept">Sadece konsept aşamasında</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>İŞLETME TİPİ <span class="required">*</span></label>
+                    <select name="type" required>
+                        <option value="">Seçiniz</option>
+                        <option value="restoran">Restoran</option>
+                        <option value="kafe">Kafe / Pastane</option>
+                        <option value="bar">Bar / Pub</option>
+                        <option value="fast-casual">Fast Casual</option>
+                        <option value="fine-dining">Fine Dining</option>
+                        <option value="cloud-kitchen">Cloud Kitchen</option>
+                        <option value="diger">Diğer</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>MUTFAK KONSEPT</label>
+                    <input type="text" name="cuisine" placeholder="Örn: İtalyan, Türk, Fusion">
+                </div>
+                
+                <div class="form-group">
+                    <label>HANGİ HİZMETLERE İHTİYACINIZ VAR? <span class="required">*</span></label>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="konsept" id="s1">
+                            <label for="s1">Konsept geliştirme</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="branding" id="s2">
+                            <label for="s2">Marka kimliği</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="menu" id="s3">
+                            <label for="s3">Menü tasarımı</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="bar-menu" id="s4">
+                            <label for="s4">Bar menüsü</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="pricing" id="s5">
+                            <label for="s5">Fiyatlandırma</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="launch" id="s6">
+                            <label for="s6">Açılış kampanyası</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="digital" id="s7">
+                            <label for="s7">Dijital pazarlama</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>BÜTÇE BEKLENTİSİ</label>
+                    <select name="budget">
+                        <option value="">Tercihen belirtmeyin</option>
+                        <option value="esnek">Esnek</option>
+                        <option value="sinirli">Sınırlı bütçe</option>
+                        <option value="orta">Orta ölçek</option>
+                        <option value="genis">Geniş bütçe</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>ZAMAN ÇİZELGESİ <span class="required">*</span></label>
+                    <select name="timeline" required>
+                        <option value="">Ne zaman başlamak istiyorsunuz?</option>
+                        <option value="hemen">Hemen (1-2 hafta)</option>
+                        <option value="1ay">1 ay içinde</option>
+                        <option value="2-3ay">2-3 ay içinde</option>
+                        <option value="fikir">Sadece fikir aşamasında</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>PROJE HAKKINDA <span class="required">*</span></label>
+                    <textarea name="description" required placeholder="Projenizi anlatın. Ne yapmak istiyorsunuz?"></textarea>
+                </div>
+            `,
+            startup: `
+                <h2>PROJE DETAYLARI</h2>
+                <p class="subtitle">Girişiminiz hakkında bilgi verin</p>
+                
+                <div class="form-group">
+                    <label>ŞİRKET DURUMU <span class="required">*</span></label>
+                    <select name="status" required>
+                        <option value="">Seçiniz</option>
+                        <option value="fikir">Sadece fikir aşamasında</option>
+                        <option value="mvp">Ürün var, müşteri yok</option>
+                        <option value="erken">İlk müşteriler var</option>
+                        <option value="buyume">Büyüme aşamasında</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>SEKTÖR <span class="required">*</span></label>
+                    <select name="sector" required>
+                        <option value="">Seçiniz</option>
+                        <option value="foodtech">Gıda teknolojisi</option>
+                        <option value="delivery">Teslimat / Lojistik</option>
+                        <option value="saas">Yazılım (SaaS)</option>
+                        <option value="ecommerce">E-ticaret</option>
+                        <option value="fintech">Finans teknolojisi</option>
+                        <option value="healthtech">Sağlık teknolojisi</option>
+                        <option value="diger">Diğer</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>HEDEF KİTLE</label>
+                    <input type="text" name="audience" placeholder="Örn: 25-35 yaş, şehirli profesyoneller">
+                </div>
+                
+                <div class="form-group">
+                    <label>HANGİ HİZMETLERE İHTİYACINIZ VAR? <span class="required">*</span></label>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="branding" id="st1">
+                            <label for="st1">Marka kimliği</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="positioning" id="st2">
+                            <label for="st2">Konumlandırma</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="gtm" id="st3">
+                            <label for="st3">Pazara giriş stratejisi</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="growth" id="st4">
+                            <label for="st4">Büyüme pazarlaması</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="digital" id="st5">
+                            <label for="st5">Dijital reklamlar</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="pitch" id="st6">
+                            <label for="st6">Yatırımcı sunumu</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="advisory" id="st7">
+                            <label for="st7">Danışmanlık</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>BÜTÇE BEKLENTİSİ</label>
+                    <select name="budget">
+                        <option value="">Tercihen belirtmeyin</option>
+                        <option value="esnek">Esnek</option>
+                        <option value="sinirli">Sınırlı bütçe</option>
+                        <option value="orta">Orta ölçek</option>
+                        <option value="genis">Geniş bütçe</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>ZAMAN ÇİZELGESİ <span class="required">*</span></label>
+                    <select name="timeline" required>
+                        <option value="">Ne zaman başlamak istiyorsunuz?</option>
+                        <option value="hemen">Hemen (1-2 hafta)</option>
+                        <option value="1ay">1 ay içinde</option>
+                        <option value="2-3ay">2-3 ay içinde</option>
+                        <option value="fikir">Sadece fikir aşamasında</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>PROJE HAKKINDA <span class="required">*</span></label>
+                    <textarea name="description" required placeholder="Girişiminizi anlatın. Çözdüğünüz sorun ne?"></textarea>
+                </div>
+            `,
+            producer: `
+                <h2>PROJE DETAYLARI</h2>
+                <p class="subtitle">Üretiminiz hakkında bilgi verin</p>
+                
+                <div class="form-group">
+                    <label>ÜRETİM DURUMU <span class="required">*</span></label>
+                    <select name="status" required>
+                        <option value="">Seçiniz</option>
+                        <option value="fikir">Henüz üretmiyorum</option>
+                        <option value="kucuk">Küçük ölçek üretim</option>
+                        <option value="buyume">Büyümek istiyorum</option>
+                        <option value="market">Marketlere girmek istiyorum</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>ÜRÜN KATEGORİSİ <span class="required">*</span></label>
+                    <select name="category" required>
+                        <option value="">Seçiniz</option>
+                        <option value="zeytinyagi">Zeytinyağı</option>
+                        <option value="recel">Reçel / Marmelat</option>
+                        <option value="cikolata">Çikolata / Tatlı</option>
+                        <option value="peynir">Peynir / Süt ürünleri</option>
+                        <option value="baharat">Baharat / Sos</option>
+                        <option value="unlu">Unlu mamuller</option>
+                        <option value="icecek">İçecekler</option>
+                        <option value="diger">Diğer</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>HANGİ HİZMETLERE İHTİYACINIZ VAR? <span class="required">*</span></label>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="brand-story" id="p1">
+                            <label for="p1">Marka hikayesi</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="packaging" id="p2">
+                            <label for="p2">Ambalaj tasarımı</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="b2b" id="p3">
+                            <label for="p3">Ticari pazarlama</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="ecommerce" id="p4">
+                            <label for="p4">E-ticaret altyapısı</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="distribution" id="p5">
+                            <label for="p5">Dağıtım stratejisi</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="certification" id="p6">
+                            <label for="p6">Sertifikasyon desteği</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>BÜTÇE BEKLENTİSİ</label>
+                    <select name="budget">
+                        <option value="">Tercihen belirtmeyin</option>
+                        <option value="esnek">Esnek</option>
+                        <option value="sinirli">Sınırlı bütçe</option>
+                        <option value="orta">Orta ölçek</option>
+                        <option value="genis">Geniş bütçe</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>ZAMAN ÇİZELGESİ <span class="required">*</span></label>
+                    <select name="timeline" required>
+                        <option value="">Ne zaman başlamak istiyorsunuz?</option>
+                        <option value="hemen">Hemen (1-2 hafta)</option>
+                        <option value="1ay">1 ay içinde</option>
+                        <option value="2-3ay">2-3 ay içinde</option>
+                        <option value="fikir">Sadece fikir aşamasında</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>PROJE HAKKINDA <span class="required">*</span></label>
+                    <textarea name="description" required placeholder="Üretim sürecinizi anlatın. Hikayeniz ne?"></textarea>
+                </div>
+            `,
+            other: `
+                <h2>PROJE DETAYLARI</h2>
+                <p class="subtitle">Projeniz hakkında bilgi verin</p>
+                
+                <div class="form-group">
+                    <label>SEKTÖR / ALAN <span class="required">*</span></label>
+                    <input type="text" name="sector" required placeholder="Örn: Eğitim, Sağlık, Perakende">
+                </div>
+                
+                <div class="form-group">
+                    <label>PROJE TİPİ <span class="required">*</span></label>
+                    <select name="project_type" required>
+                        <option value="">Seçiniz</option>
+                        <option value="yeni-marka">Yeni marka lansmanı</option>
+                        <option value="rebrand">Marka yenileme</option>
+                        <option value="kampanya">Pazarlama kampanyası</option>
+                        <option value="danismanlik">Danışmanlık</option>
+                        <option value="dijital">Dijital pazarlama</option>
+                        <option value="diger">Diğer</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>HANGİ HİZMETLERE İHTİYACINIZ VAR? <span class="required">*</span></label>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="branding" id="o1">
+                            <label for="o1">Markalaşma</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="strategy" id="o2">
+                            <label for="o2">Strateji</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="creative" id="o3">
+                            <label for="o3">Kreatif tasarım</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="digital" id="o4">
+                            <label for="o4">Dijital pazarlama</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="content" id="o5">
+                            <label for="o5">İçerik üretimi</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" name="services" value="advisory" id="o6">
+                            <label for="o6">Danışmanlık</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>BÜTÇE BEKLENTİSİ</label>
+                    <select name="budget">
+                        <option value="">Tercihen belirtmeyin</option>
+                        <option value="esnek">Esnek</option>
+                        <option value="sinirli">Sınırlı bütçe</option>
+                        <option value="orta">Orta ölçek</option>
+                        <option value="genis">Geniş bütçe</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>ZAMAN ÇİZELGESİ <span class="required">*</span></label>
+                    <select name="timeline" required>
+                        <option value="">Ne zaman başlamak istiyorsunuz?</option>
+                        <option value="hemen">Hemen (1-2 hafta)</option>
+                        <option value="1ay">1 ay içinde</option>
+                        <option value="2-3ay">2-3 ay içinde</option>
+                        <option value="fikir">Sadece fikir aşamasında</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>PROJE HAKKINDA <span class="required">*</span></label>
+                    <textarea name="description" required placeholder="Projenizi detaylı anlatın. Ne yapmak istiyorsunuz?"></textarea>
+                </div>
+            `
+        };
+        
+        function selectTarget(element, type) {
+            document.querySelectorAll('.target-card').forEach(c => c.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedType = type;
+            document.getElementById('targetType').value = type;
+            document.getElementById('nextBtn').disabled = false;
+        }
+        
+        function nextStep() {
+            if (currentStep === 1) {
+                if (!selectedType) {
+                    alert('Lütfen bir seçenek seçin');
+                    return;
+                }
+                document.getElementById('dynamicForm').innerHTML = forms[selectedType];
+                goToStep(2);
+            } else if (currentStep === 2) {
+                if (!validateStep2()) return;
+                goToStep(3);
+            } else if (currentStep === 3) {
+                if (!validateStep3()) return;
+                document.getElementById('mainForm').submit();
+            }
+        }
+        
+        function prevStep() {
+            if (currentStep > 1) goToStep(currentStep - 1);
+        }
+        
+        function goToStep(step) {
+            currentStep = step;
+            
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.querySelector(`.step[data-step="${step}"]`).classList.add('active');
+            
+            const items = document.querySelectorAll('.progress-item');
+            items.forEach((item, i) => {
+                item.classList.remove('active', 'completed');
+                if (i + 1 < step) item.classList.add('completed');
+                else if (i + 1 === step) item.classList.add('active');
+            });
+            
+            const progress = ((step - 1) / 2) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            document.getElementById('prevBtn').style.display = step === 1 ? 'none' : 'block';
+            document.getElementById('nextBtn').textContent = step === 3 ? 'TEKLİF GÖNDER' : 'İLERİ →';
+            
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+        
+        function validateStep2() {
+            const form = document.getElementById('dynamicForm');
+            const required = form.querySelectorAll('[required]');
+            let valid = true;
+            
+            console.log('Validating step 2...');
+            console.log('Required fields:', required.length);
+            
+            required.forEach(field => {
+                console.log('Field:', field.name, 'Value:', field.value);
+                if (!field.value) {
+                    valid = false;
+                    field.style.borderColor = 'var(--red)';
+                } else {
+                    field.style.borderColor = 'var(--black)';
+                }
+            });
+            
+            const checks = form.querySelectorAll('input[name="services"]');
+            const hasChecked = Array.from(checks).some(c => c.checked);
+            
+            console.log('Checkboxes checked:', hasChecked);
+            
+            if (!hasChecked) {
+                alert('Lütfen en az bir hizmet seçin');
+                return false;
+            }
+            
+            if (!valid) {
+                alert('Lütfen tüm gerekli alanları doldurun');
+                return false;
+            }
+            
+            console.log('Step 2 valid!');
+            return true;
+        }
+        
+        function validateStep3() {
+            const step = document.querySelector('.step[data-step="3"]');
+            const required = step.querySelectorAll('[required]');
+            let valid = true;
+            
+            required.forEach(field => {
+                if (!field.value) {
+                    valid = false;
+                    field.style.borderColor = 'var(--red)';
+                } else {
+                    field.style.borderColor = 'var(--black)';
+                }
+           

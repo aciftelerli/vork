@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VÖRK KITCHEN | Marka Mühendisliği</title>
+    <meta name="description" content="Restoranlar, startup'lar ve gıda üreticileri için marka mühendisliği ve pazarlama.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --red: #E63946;
+            --black: #000000;
+            --off-white: #F5F5F0;
+            --yellow: #FFD60A;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--off-white);
+            color: var(--black);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 0.9;
+        }
+        
+        /* Scrolling Service Banner */
+        .service-banner {
+            background: var(--red);
+            color: var(--black);
+            padding: 0.4rem 0;
+            border-bottom: 0px solid var(--black);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 3000;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+        
+        .service-ticker {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .service-ticker-content {
+            display: flex;
+            animation: serviceTicker 10s linear infinite;
+            white-space: nowrap;
+        }
+        
+        .service-ticker-item {
+            display: inline-block;
+            padding: 0 3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.9rem;
+        }
+        
+        @keyframes serviceTicker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .contact-btn {
+            background: var(--yellow);
+            color: var(--black);
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.85rem;
+            border: 2px solid var(--black);
+            margin-right: 1rem;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        
+        .contact-btn:hover,
+        .contact-btn.scrolled {
+            background: var(--black);
+            color: var(--yellow);
+        }
+        
+          /* Header - FIXED POSITIONING */
+        header {
+            position: fixed;
+            top: 62px;
+            left: 0;
+            right: 0;
+            background: var(--off-white);
+            border-bottom: 3px solid var(--black);
+            z-index: 1500;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        
+        }
+        
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            color: var(--black);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        
+        nav a {
+            color: var(--black);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            transition: color 0.2s ease;
+        }
+        
+        nav a:hover {
+            color: var(--red);
+        }
+        
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15rem 2rem 4rem;
+            background: var(--off-white);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .hero-video-bg video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        
+        .hero-video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .kitchen-badge {
+            display: inline-block;
+            background: var(--black);
+            color: var(--yellow);
+            padding: 0.5rem 1rem;
+            font-weight: 700;
+            transform: rotate(-3deg);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            box-shadow: 3px 3px 0 var(--red);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .kitchen-badge:hover {
+            transform: rotate(3deg) scale(1.1);
+            box-shadow: 5px 5px 0 var(--red);
+        }
+        
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 7rem);
+            margin-bottom: 1rem;
+            text-shadow: 5px 5px 0 var(--red), 3px 3px 10px rgba(0,0,0,0.8);
+            color: var(--off-white);
+        }
+        
+        .hero .red-bar {
+            height: 8px;
+            width: 200px;
+            background: var(--red);
+            margin: 2rem auto;
+            box-shadow: 0 0 20px rgba(230, 57, 70, 0.6);
+        }
+        
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--yellow);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+        
+        .hero .subtext {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            font-weight: 500;
+            color: var(--off-white);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            line-height: 1.8;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: var(--red);
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 3px solid var(--black);
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 0 var(--black);
+            position: relative;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .cta-button:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 var(--black);
+            background: var(--yellow);
+            animation: none;
+        }
+        
+        /* Services - Compact */
+        .services-compact {
+            padding: 6rem 2rem;
+            background: var(--off-white);
+        }
+        
+        .services-compact h2 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .services-grid-compact {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .service-card-compact {
+            background: var(--red);
+            padding: 2rem;
+            border: 3px solid var(--black);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card-compact::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--black);
+            transition: left 0.3s ease;
+            z-index: 0;
+        }
+        
+        .service-card-compact:hover::before {
+            left: 0;
+        }
+        
+        .service-card-compact:hover {
+            transform: translateY(-10px) rotate(2deg);
+            border-color: var(--yellow);
+            box-shadow: 10px 10px 0 var(--black);
+        }
+        
+        .service-card-compact h3,
+        .service-card-compact p {
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+        
+        .service-card-compact:hover h3,
+        .service-card-compact:hover p {
+            color: var(--yellow);
+        }
+        
+        .service-card-compact h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-card-compact p {
+            font-size: 0.95rem;
+        }
+        
+        /* References Section */
+        .references {
+            padding: 4rem 0;
+            background: var(--black);
+            overflow: hidden;
+            border-top: 3px solid var(--red);
+            border-bottom: 3px solid var(--red);
+        }
+        
+        .references-container h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            text-align: center;
+            color: var(--yellow);
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+        }
+        
+        .logo-scroll {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        
+        .logo-track {
+            display: flex;
+            gap: 4rem;
+            animation: scrollLogos 40s linear infinite;
+            width: fit-content;
+        }
+        
+        .logo-track:hover {
+            animation-play-state: paused;
+        }
+        
+        @keyframes scrollLogos {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+        
+        .logo-item {
+            flex-shrink: 0;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            color: var(--off-white);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 1rem 2rem;
+            border: 2px solid var(--red);
+            background: var(--black);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .logo-item:hover {
+            background: var(--red);
+            color: var(--black);
+            transform: scale(1.1);
+            border-color: var(--yellow);
+        }
+        
+        /* Manifesto - Turkish Terms Only */
+        .manifesto {
+            padding: 6rem 2rem;
+            background: var(--red);
+        }
+        
+        .manifesto h2 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .manifesto-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .manifesto-card {
+            background: var(--black);
+            color: var(--off-white);
+            padding: 3rem 2rem;
+            border: 3px solid var(--red);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .manifesto-card:hover {
+            background: var(--red);
+            color: var(--black);
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .manifesto-card .number {
+            font-size: 4rem;
+            font-family: 'Bebas Neue', sans-serif;
+            color: var(--yellow);
+            line-height: 1;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .manifesto-card:hover .number {
+            color: var(--black);
+            transform: rotate(5deg);
+        }
+        
+        .manifesto-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        /* Team Carousel Re-write */
+        .team {
+            padding: 6rem 0;
+            background: var(--off-white);
+            overflow: hidden;
+        }
+        
+        .team h2 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .team-carousel {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            padding: 0 10% 4rem;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+        
+        .team-carousel::-webkit-scrollbar { display: none; }
+        
+        .team-member {
+            flex: 0 0 45%;
+            min-width: 500px;
+            display: flex;
+            background: white;
+            border: 3px solid var(--black);
+            scroll-snap-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        
+        .team-member:nth-child(n+3) {
+            opacity: 0.3;
+        }
+        
+        .team-member:hover {
+            transform: scale(1.02);
+            box-shadow: 15px 15px 0 var(--red);
+        }
+        
+        .team-photo {
+            flex: 1;
+            height: 400px;
+            filter: grayscale(100%);
+            border-right: 3px solid var(--black);
+            transition: filter 0.4s ease;
+        }
+        
+        .team-member:hover .team-photo {
+            filter: grayscale(0%);
+        }
+        
+        .team-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .team-info {
+            flex: 1;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .team-info h3 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-info .role {
+            color: var(--red);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .team-info .desc {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: var(--off-white);
+            border-top: 3px solid var(--red);
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-logo h3 {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            color: var(--yellow);
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-tagline {
+            color: var(--red);
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-links h4 {
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--yellow);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: var(--off-white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-size: 0.95rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--yellow);
+        }
+        
+        .footer-right h4 {
+            font-family: 'Archivo Black', sans-serif;
+            color: var(--yellow);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        
+        .newsletter-desc {
+            color: var(--off-white);
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        
+        .newsletter-form {
+            width: 100%;
+        }
+        
+        .newsletter-input-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .newsletter-input-group input {
+            flex: 1;
+            padding: 1rem;
+            background: var(--off-white);
+            border: 2px solid var(--off-white);
+            color: var(--black);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .newsletter-input-group input:focus {
+            outline: none;
+            border-color: var(--yellow);
+        }
+        
+        .newsletter-input-group button {
+            padding: 1rem 2rem;
+            background: var(--red);
+            color: var(--black);
+            border: 2px solid var(--red);
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .newsletter-input-group button:hover {
+            background: var(--yellow);
+            border-color: var(--yellow);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--off-white);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .newsletter-input-group {
+                flex-direction: column;
+            }
+            
+            .newsletter-input-group button {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .manifesto-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .team-member {
+                flex: 0 0 85%;
+                min-width: 300px;
+                flex-direction: column;
+            }
+            .team-photo {
+                height: 300px;
+                border-right: none;
+                border-bottom: 3px solid var(--black);
+            }
+        }
+
+        @media (max-width: 768px) {
+            /* Manifesto mobile */
+            .manifesto-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            /* Mobile ticker */
+            .service-banner {
+                padding: 0.3rem 0;
+            }
+            .service-ticker-item {
+                font-size: 0.75rem;
+                padding: 0 1.5rem;
+            }
+            .contact-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.7rem;
+            }
+            
+            /* Header mobile */
+            header {
+                top: 35px;
+                padding: 0.75rem 1rem;
+                flex-direction: row;
+                gap: 0;
+            }
+            .logo {
+                font-size: 1.2rem;
+            }
+            nav {
+                display: flex;
+                gap: 0.5rem;
+            }
+            nav a {
+                margin-left: 0;
+                font-size: 0.7rem;
+            }
+            
+            /* Hero mobile */
+            .hero {
+                padding-top: 14rem;
+            }
+            .kitchen-badge {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header {
+                flex-direction: column;
+                gap: 0.5rem;
+                padding: 0.5rem;
+            }
+            nav {
+                width: 100%;
+                justify-content: space-around;
+            }
+            nav a {
+                font-size: 0.65rem;
+            }
+            .hero {
+                padding-top: 16rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="service-banner">
+        <div class="service-ticker">
+            <div class="service-ticker-content">
+                <span class="service-ticker-item">RESTORAN MARKALAMA</span>
+                <span class="service-ticker-item">MENÜ TASARIMI</span>
+                <span class="service-ticker-item">GIDA GİRİŞİMLERİ STRATEJİSİ</span>
+                <span class="service-ticker-item">BÜYÜME ODAKLI PAZARLAMA</span>
+                <span class="service-ticker-item">MARKA YENİLEME</span>
+                <span class="service-ticker-item">TİCARİ PAZARLAMA</span>
+                <span class="service-ticker-item">RESTORAN MARKALAMA</span>
+                <span class="service-ticker-item">MENÜ TASARIMI</span>
+            </div>
+        </div>
+        <a href="#form" class="contact-btn" id="contactBtn">BİZE ULAŞIN</a>
+    </div>
+
+    <header>
+        <a href="#" class="logo">VÖRK KITCHEN</a>
+        <nav>
+            <a href="#services">HİZMETLER</a>
+            <a href="#manifesto">MANİFESTO</a>
+            <a href="#team">EKİP</a>
+            <a href="#form">İLETİŞİM</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <!-- Video Background -->
+        <div class="hero-video-bg">
+            <video autoplay muted loop playsinline>
+                <source src="https://6999afed3b28d3b181f84847.imgix.net/2882090-uhd_3840_2160_24fps.mp4" type="video/mp4">
+                <!-- Fallback image if video doesn't load -->
+            </video>
+        </div>
+        <div class="hero-video-overlay"></div>
+        
+        <!-- Content -->
+        <div class="hero-content">
+            <div class="kitchen-badge">İŞİN MUTFAĞINDAN</div>
+            <h1>MARKA<br>MÜHENDİSLİĞİ</h1>
+            <div class="red-bar"></div>
+            <p class="subtitle">Restoranlar • Girişimler • Gıda Üreticileri</p>
+            <p class="subtext">
+                Ekibimizde pazarlama profesyonelleri, stratejistler, executive şefler ve ödüllü miksolojistler var. Global pazarlama deneyimimizi operasyonel gerçeklikle marine ediyoruz. Markalaşmayı da biliyoruz, mutfağın sıcağında çalışmayı da...
+            </p>
+            <a href="#form" class="cta-button">HEMEN BAŞLAYALIM</a>
+        </div>
+    </section>
+
+    <section class="services-compact" id="services">
+        <h2>HİZMETLERİMİZ</h2>
+        <div class="services-grid-compact">
+            <div class="service-card-compact">
+                <h3>RESTORAN | F&B</h3>
+                <p>Konsept, markalama, menü tasarımı, bar menüsü, maliyet analizi, reçete oluşturma, müşteri deneyimi, lansman.</p>
+            </div>
+            
+            <div class="service-card-compact">
+                <h3>STARTUP GTM</h3>
+                <p>Ürün-pazar uyumu, konumlandırma, pazara giriş stratejisi, büyüme odaklı pazarlama, pivot danışmanlığı, yatırımcı sunumları.</p>
+            </div>
+            
+            <div class="service-card-compact">
+                <h3>BUTİK GIDA ÜRETİMİ</h3>
+                <p>Marka hikayesi, ambalaj tasarımı, ticari pazarlama, e-ticaret altyapı danışmanlığı, dağıtım kanalı ve lojistik optimizasyon.</p>
+            </div>
+            
+            <div class="service-card-compact">
+                <h3>MARKALAŞMA & STRATEJİ</h3>
+                <p>Konumlandırma, mesaj yönetimi, marka yenileme, marka kimliği.</p>
+            </div>
+            
+            <div class="service-card-compact">
+                <h3>DİJİTAL PAZARLAMA</h3>
+                <p>Arama motoru reklamları, sosyal medya reklamları, içerik üreticileri ile pazarlama, veri odaklı kampanyalar.</p>
+            </div>
+            
+            <div class="service-card-compact">
+                <h3>CREATIVE DIRECTION</h3>
+                <p>Markanıza özel üst düzey pazarlama yönetimi. Strateji, ekip yönetimi, hedef takibi.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- References Section -->
+    <section class="references">
+        <div class="references-container">
+            <h2>ÇALIŞTIĞIMIZ MARKALAR</h2>
+            <div class="logo-scroll">
+                <div class="logo-track">
+                    <div class="logo-item">MİGROS</div>
+                    <div class="logo-item">BURN</div>
+                    <div class="logo-item">OPTIMUM NUTRITION</div>
+                    <div class="logo-item">QNB</div>
+                    <div class="logo-item">VOLVO</div>
+                    <div class="logo-item">VESTEL</div>
+                    <div class="logo-item">PEPSICO</div>
+                    <div class="logo-item">PETROL OFİSİ</div>
+                    <div class="logo-item">DUREX</div>
+                    <div class="logo-item">FABER-CASTELL</div>
+                    <div class="logo-item">COCA-COLA</div>
+                    <div class="logo-item">VODAFONE</div>
+                    <div class="logo-item">ÜLKER</div>
+                    <div class="logo-item">FORD</div>
+                    <div class="logo-item">COTEX</div>
+                    <div class="logo-item">NISSAN</div>
+                    <div class="logo-item">VOLKSWAGEN</div>
+                    <div class="logo-item">POWER FM</div>
+                    <div class="logo-item">LEZİTA</div>
+                    <div class="logo-item">SİMİT SARAYI</div>
+                    <div class="logo-item">HILLSIDE</div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="logo-item">MİGROS</div>
+                    <div class="logo-item">BURN</div>
+                    <div class="logo-item">OPTIMUM NUTRITION</div>
+                    <div class="logo-item">QNB</div>
+                    <div class="logo-item">VOLVO</div>
+                    <div class="logo-item">VESTEL</div>
+                    <div class="logo-item">PEPSICO</div>
+                    <div class="logo-item">PETROL OFİSİ</div>
+                    <div class="logo-item">DUREX</div>
+                    <div class="logo-item">FABER-CASTELL</div>
+                    <div class="logo-item">COCA-COLA</div>
+                    <div class="logo-item">VODAFONE</div>
+                    <div class="logo-item">ÜLKER</div>
+                    <div class="logo-item">FORD</div>
+                    <div class="logo-item">COTEX</div>
+                    <div class="logo-item">NISSAN</div>
+                    <div class="logo-item">VOLKSWAGEN</div>
+                    <div class="logo-item">POWER FM</div>
+                    <div class="logo-item">LEZİTA</div>
+                    <div class="logo-item">SİMİT SARAYI</div>
+                    <div class="logo-item">HILLSIDE</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="manifesto" id="manifesto">
+        <h2>VÖRK KITCHEN MANİFESTOSU</h2>
+        <div class="manifesto-grid">
+            <div class="manifesto-card">
+                <div class="number">01</div>
+                <h3>CİRO > ALKIŞ</h3>
+                <p>Ödüller güzeldir ama faturaları ödemez. Biz hem yaratıcılığa hem de net kâra odaklanırız.</p>
+            </div>
+            
+            <div class="manifesto-card">
+                <div class="number">02</div>
+                <h3>DEĞİŞ YA DA KAYBOL</h3>
+                <p>"Biz hep böyle yaptık" diyenlerle yol yürümeyiz. Boş bir sayfada sıfırdan başlamaya hazır mısınız?</p>
+            </div>
+            
+            <div class="manifesto-card">
+                <div class="number">03</div>
+                <h3>VERİ > TAHMİN</h3>
+                <p>"Bence" ile cümle kurmayız. Verilere dayalı konuşur, sonucu ölçeriz.</p>
+            </div>
+            
+            <div class="manifesto-card">
+                <div class="number">04</div>
+                <h3>SAHİPLENME</h3>
+                <p>Çalıştığımız her projeye kendi mutfağımız, kendi işimiz gibi bakarız.</p>
+            </div>
+            
+            <div class="manifesto-card">
+                <div class="number">05</div>
+                <h3>SOMUT ETKİ</h3>
+                <p>Her projede ölçülebilir, elle tutulur bir gelişim bırakmayı hedefleriz.</p>
+            </div>
+            
+            <div class="manifesto-card">
+                <div class="number">06</div>
+                <h3>MUTFAĞIN İÇİNDEN</h3>
+                <p>Şirket kurduk, kriz yönettik, verilerle büyüdük. Teoride değil, bizzat ateşin başında öğrendik.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="team" id="team">
+        <h2>EKİP</h2>
+        <div class="team-carousel" id="teamCarousel">
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://6999afed3b28d3b181f84847.imgix.net/team-images/altug.png?fit=fill&auto=format?w=600" alt="Altuğ">
+                </div>
+                <div class="team-info">
+                    <h3>ALTUĞ ÇİFTELERLİ</h3>
+                    <div class="role">MARKETING DIRECTOR</div>
+                    <p class="desc">Global marka stratejilerinde 15 yıllık deneyim, gıda sektöründe dijital dönüşüm uzmanı.</p>
+                </div>
+            </div>
+            
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://6999afed3b28d3b181f84847.imgix.net/mehmet.png?w=600" alt="Mehmet">
+                </div>
+                <div class="team-info">
+                    <h3>MEHMET KABAK</h3>
+                    <div class="role">ART DIRECTOR</div>
+                    <p class="desc">Görsel kimlik tasarımında yetkin, profesyonel video kurgu ve dijital grafik içerik üretim uzmanı.</p>
+                </div>
+            </div>
+            
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://6999afed3b28d3b181f84847.imgix.net/eren.png?fit=fill&auto=format?w=600" alt="Eren">
+                </div>
+                <div class="team-info">
+                    <h3>EREN ERBAYKENT</h3>
+                    <div class="role">EXE. CHEF | LONDON</div>
+                    <p class="desc">Uluslararası mutfak deneyimiyle UK merkezli operasyon ve ekip lideri.</p>
+                </div>
+            </div>
+            <!---
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://6999afed3b28d3b181f84847.imgix.net/Bas%CC%A7l%C4%B1ks%C4%B1z-2.png?fit=fill&auto=formatw=600" alt="Murat">
+                </div>
+                <div class="team-info">
+                    <h3>MURAT DÖNMEZ "ALEX"</h3>
+                    <div class="role">EXECUTIVE CHEF</div>
+                    <p class="desc">Mutfak yönetimi menü geliştirme ve operasyon lideri yaratıcı şef.</p>
+                </div>
+            </div>--->
+          
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://6999afed3b28d3b181f84847.imgix.net/talha.png?fit=fill&auto=format?w=600" alt="Talha">
+                </div>
+                <div class="team-info">
+                    <h3>TALHA YAMAN</h3>
+                    <div class="role">MİKSOLOJİST</div>
+                    <p class="desc">Kokteyl menüsü tasarımı ve ödüllü reçeteler.</p>
+                </div>
+            </div>
+
+            <div class="team-member">
+                <div class="team-photo">
+                    <img src="https://6999afed3b28d3b181f84847.imgix.net/arif.png?fit=fill&auto=format?w=600" alt="Arif">
+                </div>
+                <div class="team-info">
+                    <h3>ARİF ÇINAR</h3>
+                    <div class="role">Dijital Pazarlama Direktörü</div>
+                    <p class="desc">strateji büyüme ve performans odaklı veri temelli pazarlama lideri.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="padding: 6rem 2rem; background: var(--off-white);" id="form">
+        <div style="max-width: 700px; margin: 0 auto;">
+            <h2 style="font-family: 'Archivo Black', sans-serif; font-size: clamp(2rem, 5vw, 3.5rem); text-align: center; margin-bottom: 3rem; text-transform: uppercase;">MUTFAĞA HOŞ GELDİN</h2>
+            <form action="https://formsubmit.co/aciftelerli@gmail.com" method="POST">
+                <input type="text" name="_honey" style="display:none">
+                <input type="hidden" name="_captcha" value="false">
+                
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">İSİM *</label>
+                    <input type="text" name="name" required style="width: 100%; padding: 1rem; border: 3px solid var(--black); font-family: 'JetBrains Mono', monospace; transition: all 0.3s ease;" onfocus="this.style.borderColor='var(--red)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='5px 5px 0 var(--black)'" onblur="this.style.borderColor='var(--black)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">EMAIL *</label>
+                    <input type="email" name="email" required style="width: 100%; padding: 1rem; border: 3px solid var(--black); font-family: 'JetBrains Mono', monospace; transition: all 0.3s ease;" onfocus="this.style.borderColor='var(--red)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='5px 5px 0 var(--black)'" onblur="this.style.borderColor='var(--black)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">TELEFON</label>
+                    <input type="tel" name="phone" style="width: 100%; padding: 1rem; border: 3px solid var(--black); font-family: 'JetBrains Mono', monospace; transition: all 0.3s ease;" onfocus="this.style.borderColor='var(--red)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='5px 5px 0 var(--black)'" onblur="this.style.borderColor='var(--black)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">İŞLETMENİZ *</label>
+                    <input type="text" name="business" required style="width: 100%; padding: 1rem; border: 3px solid var(--black); font-family: 'JetBrains Mono', monospace; transition: all 0.3s ease;" onfocus="this.style.borderColor='var(--red)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='5px 5px 0 var(--black)'" onblur="this.style.borderColor='var(--black)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+                </div>
+                
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; font-weight: 700; margin-bottom: 0.5rem; text-transform: uppercase;">MESAJINIZ</label>
+                    <textarea name="message" style="width: 100%; padding: 1rem; border: 3px solid var(--black); font-family: 'JetBrains Mono', monospace; min-height: 120px; transition: all 0.3s ease;" onfocus="this.style.borderColor='var(--red)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='5px 5px 0 var(--black)'" onblur="this.style.borderColor='var(--black)'; this.style.transform='translateY(0)'; this.style.boxShadow='none'"></textarea>
+                </div>
+                
+                <button type="submit" style="width: 100%; padding: 1.5rem; background: var(--yellow); color: var(--black); border: 3px solid var(--black); font-family: 'Archivo Black', sans-serif; font-size: 1.2rem; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; box-shadow: 5px 5px 0 var(--black);" onmouseover="this.style.transform='translate(-3px, -3px)'; this.style.boxShadow='8px 8px 0 var(--black)'; this.style.background='var(--red)'" onmouseout="this.style.transform='translate(0, 0)'; this.style.boxShadow='5px 5px 0 var(--black)'; this.style.background='var(--yellow)'">GÖNDER</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="footer-logo">
+                    <h3>VÖRK KITCHEN</h3>
+                    <p class="footer-tagline">İşin Mutfağından</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>HIZLI LİNKLER</h4>
+                    <ul>
+                        <li><a href="/sss.html">Sıkça Sorulan Sorular</a></li>
+                        <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/hizli-teklif.html">Hızlı Teklif Al</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-right">
+                <h4>MUTFAĞIMIZDAN GİZLİ TARİFLER</h4>
+                <p class="newsletter-desc">Aylık bültenimizi e-postanıza servis edelim!</p>
+                <form class="newsletter-form" action="https://formsubmit.co/aciftelerli@gmail.com" method="POST">
+                    <input type="hidden" name="_subject" value="VÖRK Newsletter Aboneliği">
+                    <input type="text" name="_honey" style="display:none">
+                    <input type="hidden" name="_captcha" value="false">
+                    <div class="newsletter-input-group">
+                        <input type="email" name="newsletter_email" placeholder="E-posta adresiniz" required>
+                        <button type="submit">ABONE OL</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2026 VÖRK KITCHEN | Marka Mühendisliği</p>
+        </div>
+    </footer>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const btn = document.getElementById('contactBtn');
+            if (window.scrollY > 300) {
+                btn.classList.add('scrolled');
+            } else {
+                btn.classList.remove('scrolled');
+            }
+        });
+
+        const carousel = document.getElementById('teamCarousel');
+        carousel.addEventListener('scroll', () => {
+            const members = document.querySelectorAll('.team-member');
+            members.forEach((member) => {
+                const rect = member.getBoundingClientRect();
+                if (rect.left < window.innerWidth * 0.7) {
+                    member.style.opacity = "1";
+                } else {
+                    member.style.opacity = "0.3";
+                }
+            });
+        });
+    </script>
+</body>
+</html>

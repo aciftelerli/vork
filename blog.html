@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | VÖRK KITCHEN - Mutfaktan Notlar</title>
+    <meta name="description" content="Restoran pazarlama, startup büyüme stratejileri, gıda sektörü içgörüleri. VÖRK Kitchen'dan güncel içerikler.">
+    <meta name="keywords" content="restoran pazarlama, menü mühendisliği, startup GTM, gıda pazarlama, F&B strateji">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --red: #E63946;
+            --black: #000000;
+            --off-white: #F5F5F0;
+            --yellow: #FFD60A;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--off-white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        
+        /* Header */
+        header {
+            background: var(--black);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--red);
+        }
+        
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            color: var(--yellow);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--off-white);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .back-link:hover {
+            color: var(--yellow);
+        }
+        
+        /* Hero */
+        .blog-hero {
+            background: var(--red);
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        
+        .blog-hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            color: var(--black);
+            margin-bottom: 1rem;
+        }
+        
+        .blog-hero p {
+            font-size: 1.2rem;
+            color: var(--black);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Search */
+        .search-section {
+            padding: 3rem 2rem;
+            background: var(--off-white);
+        }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 1rem;
+            border: 3px solid var(--black);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--red);
+        }
+        
+        .search-box button {
+            padding: 1rem 2rem;
+            background: var(--red);
+            color: var(--black);
+            border: 3px solid var(--black);
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box button:hover {
+            background: var(--yellow);
+        }
+        
+        /* Blog Grid */
+        .blog-grid {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .post-card {
+            background: white;
+            border: 3px solid var(--black);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 10px 10px 0 var(--black);
+        }
+        
+        .post-category {
+            display: inline-block;
+            background: var(--red);
+            color: var(--black);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        
+        .post-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--black);
+        }
+        
+        .post-meta {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .post-excerpt {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        
+        .read-more {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--yellow);
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border: 2px solid var(--black);
+            transition: all 0.3s ease;
+        }
+        
+        .read-more:hover {
+            background: var(--red);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        .modal.active {
+            display: block;
+        }
+        
+        .modal-content {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: var(--off-white);
+            padding: 3rem;
+            border: 3px solid var(--red);
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--red);
+            color: var(--black);
+            border: none;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-close:hover {
+            background: var(--yellow);
+            transform: rotate(90deg);
+        }
+        
+        .modal-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .modal-content .post-meta {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--red);
+        }
+        
+        .modal-content .post-body {
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        
+        .modal-content .post-body h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--red);
+        }
+        
+        .modal-content .post-body p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-content .post-body ul {
+            margin: 1rem 0 1.5rem 2rem;
+        }
+        
+        .modal-content .post-body li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .modal-content .post-body strong {
+            color: var(--red);
+        }
+        
+        /* Newsletter in Blog */
+        .newsletter-blog {
+            background: var(--black);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 3px solid var(--red);
+            border-bottom: 3px solid var(--red);
+        }
+        
+        .newsletter-blog h2 {
+            font-size: 2.5rem;
+            color: var(--yellow);
+            margin-bottom: 1rem;
+        }
+        
+        .newsletter-blog p {
+            color: var(--off-white);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .newsletter-blog form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .newsletter-blog input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .newsletter-blog button {
+            padding: 1rem 2rem;
+            background: var(--red);
+            color: var(--black);
+            border: none;
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .newsletter-blog button:hover {
+            background: var(--yellow);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: var(--off-white);
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .modal-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .newsletter-blog form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">VÖRK KITCHEN</a>
+        <a href="/" class="back-link">← Ana Sayfaya Dön</a>
+    </header>
+    
+    <section class="blog-hero">
+        <h1>MUTFAKTAN NOTLAR</h1>
+        <p>Restoran pazarlama, startup büyüme, gıda sektörü stratejileri</p>
+    </section>
+    
+    <section class="search-section">
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Blog yazılarında ara...">
+                <button onclick="searchPosts()">ARA</button>
+            </div>
+        </div>
+    </section>
+    
+    <section class="blog-grid">
+        <div class="posts-grid" id="postsGrid">
+            <!-- Blog posts will be inserted here by JavaScript -->
+        </div>
+    </section>
+    
+    <section class="newsletter-blog">
+        <h2>GİZLİ TARİFLER</h2>
+        <p>Aylık bültenimize abone olun, mutfağın sırlarını ilk siz öğrenin!</p>
+        <form action="https://formsubmit.co/el/gehozu" method="POST">
+            <input type="hidden" name="_subject" value="Blog Newsletter Aboneliği">
+            <input type="text" name="_honey" style="display:none">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="email" name="newsletter_email" placeholder="E-posta adresiniz" required>
+            <button type="submit">ABONE OL</button>
+        </form>
+    </section>
+    
+    <footer>
+        <p>© 2026 VÖRK KITCHEN</p>
+    </footer>
+    
+    <!-- Modal -->
+    <div class="modal" id="postModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Blog posts data
+        const posts = [
+            {
+                id: 1,
+                category: "RESTORAN",
+                title: "Menü Mühendisliği: Kârlı Bir Menü Nasıl Tasarlanır?",
+                date: "15 Şubat 2026",
+                author: "Altuğ Çiftelerli",
+                excerpt: "Menü tasarımı sanat değil, matematik. Food cost, psikoloji ve strateji birleşince ortaya kârlı bir menü çıkar. İşte adım adım menü mühendisliği...",
+                body: `
+                    <h3>Menü Sadece Bir Liste Değil</h3>
+                    <p>Çoğu restoran sahibi menüyü sadece ürün listesi olarak görür. Oysa menü, işletmenizin en güçlü pazarlama aracıdır. Doğru tasarlanmış bir menü, karlılığınızı %30-40 artırabilir.</p>
+                    
+                    <h3>1. Menu Matrix: Ürünlerinizi Kategorize Edin</h3>
+                    <p>Her ürününüzü 4 kategoriden birine yerleştirin:</p>
+                    <ul>
+                        <li><strong>Stars (Yıldızlar):</strong> Hem çok satan hem karlı ürünler</li>
+                        <li><strong>Plowhorses (Beygirler):</strong> Çok satar ama kârı düşük</li>
+                        <li><strong>Puzzles (Bulmacalar):</strong> Az satar ama karlı</li>
+                        <li><strong>Dogs (Kayıplar):</strong> Ne satar ne karlı - bunları menüden çıkarın</li>
+                    </ul>
+                    
+                    <h3>2. Anchor Pricing Stratejisi</h3>
+                    <p>Menünüzün en başına çok pahalı bir ürün koyun. Bu ürün satmayacak ama diğer ürünleri ucuz gösterecek. Müşteri algısı böyle çalışır.</p>
+                    
+                    <h3>3. Prime Space Optimizasyonu</h3>
+                    <p>İnsan gözü menüde önce sağ üst köşeye bakar. En karlı ürününüzü oraya yerleştirin. Sonra sol üst, sonra sağ alt.</p>
+                    
+                    <h3>4. Fiyat Psikolojisi</h3>
+                    <p>₺ işareti kullanmayın. "150₺" yerine sadece "150" yazın. Para sembolü harcama acısını artırır. Ayrıca 99,90 gibi fiyatlar fast-food'a özgüdür - siz yuvarlak rakam kullanın.</p>
+                    
+                    <h3>5. Descriptive Naming</h3>
+                    <p>Ürün isimlerini uzatın. "Burger" yerine "Anne usulü ağır ateşte pişmiş angus burger" yazın. Uzun isimler %27 daha fazla satış getirir.</p>
+                    
+                    <p><strong>Sonuç:</strong> Menü tasarımı bir kez yaptığınız ve unuttuğunuz bir iş değil. 3 ayda bir gözden geçirin, test edin, optimize edin.</p>
+                `
+            },
+            {
+                id: 2,
+                category: "STARTUP",
+                title: "Startup GTM Stratejisi: Ürününüz Harika Ama Kimse Kullanmıyor",
+                date: "10 Şubat 2026",
+                author: "Altuğ Çiftelerli",
+                excerpt: "Product-market fit buldunuz. Ürün mükemmel. Ama kullanıcı yok. Sorun: Go-to-Market stratejiniz yok. İşte adım adım GTM nasıl kurulur...",
+                body: `
+                    <h3>GTM Nedir ve Neden Önemli?</h3>
+                    <p>Go-to-Market (GTM) stratejisi, harika ürününüzü doğru müşterilere, doğru zamanda, doğru kanallardan ulaştırma planıdır. Ürün yapmak kolay, satmak zor.</p>
+                    
+                    <h3>1. ICP (Ideal Customer Profile) Tanımlayın</h3>
+                    <p>Herkes sizin müşteriniz değildir. İlk 100 müşteriniz kim olacak? Detaylı tanımlayın:</p>
+                    <ul>
+                        <li>Sektör, şirket büyüklüğü</li>
+                        <li>Demografik özellikler</li>
+                        <li>Acı noktaları (pain points)</li>
+                        <li>Satın alma gücü</li>
+                    </ul>
+                    
+                    <h3>2. Kanal Seçimi: Hepsinde Olmayın</h3>
+                    <p>B2B startup → LinkedIn + Email + Events<br>
+                    B2C consumer app → Instagram + TikTok + Influencer<br>
+                    SaaS → Google Ads + Content Marketing + Product Hunt</p>
+                    
+                    <p>3 kanalda %100 olmak, 10 kanalda %30 olmaktan iyidir.</p>
+                    
+                    <h3>3. Messaging Framework</h3>
+                    <p>Müşteriye "ne" yaptığınızı değil, "onun için ne" yaptığınızı anlatın.<br>
+                    Kötü: "AI destekli CRM yazılımı"<br>
+                    İyi: "Satış ekibiniz ayda 200 saat kazansın"</p>
+                    
+                    <h3>4. Launch Roadmap</h3>
+                    <p>T-30: Teaser kampanya, waitlist<br>
+                    T-14: Beta kullanıcılar, testimonials<br>
+                    T-7: Press outreach, influencer seeds<br>
+                    T-0: Launch (Product Hunt, sosyal medya push)<br>
+                    T+7: Optimize, feedback loop</p>
+                    
+                    <h3>5. Metrikler: Neyi Ölçeceksiniz?</h3>
+                    <ul>
+                        <li>CAC (Customer Acquisition Cost)</li>
+                        <li>LTV (Lifetime Value)</li>
+                        <li>Conversion rate (visitor → signup → paying)</li>
+                        <li>Churn rate</li>
+                    </ul>
+                    
+                    <p><strong>Sonuç:</strong> GTM stratejisi olmadan launch yapmak, haritasız okyanusta yüzmek gibi. Plan yapın, test edin, pivot edin.</p>
+                `
+            },
+            {
+                id: 3,
+                category: "DİJİTAL",
+                title: "Meta Ads ile Restoran Pazarlama: 50.000₺ Yakmanın 5 Yolu",
+                date: "5 Şubat 2026",
+                author: "Arif Çınar",
+                excerpt: "Meta Ads (Facebook & Instagram) restoranlar için güçlü bir araç. Ama yanlış kullanınca bütçeniz yanar. İşte en sık yapılan 5 hata ve çözümleri...",
+                body: `
+                    <h3>Dijital Reklam Yaktığınızı Nasıl Anlarsınız?</h3>
+                    <p>Çok basit: Harcadığınız para, kazandığınız paradan fazlaysa yakıyorsunuz. Ama çoğu restoran bunu bile ölçmüyor.</p>
+                    
+                    <h3>HATA 1: Geniş Hedefleme</h3>
+                    <p><strong>Yanlış:</strong> "İzmir'deki 18-65 yaş herkes"<br>
+                    <strong>Doğru:</strong> "İzmir Alsancak/Karşıyaka, 25-45 yaş, foodie interest, gelir üst segment"</p>
+                    
+                    <p>Geniş hedeflemede bütçenizin %70'i ilgisiz kişilere gider.</p>
+                    
+                    <h3>HATA 2: Yanlış Kampanya Hedefi</h3>
+                    <p><strong>Yanlış:</strong> Reach (erişim) kampanyası<br>
+                    <strong>Doğru:</strong> Traffic → Website veya Conversions → Rezervasyon</p>
+                    
+                    <p>Erişim size sadece "kaç kişi gördü" söyler. Ama kaç kişi geldi? O önemli.</p>
+                    
+                    <h3>HATA 3: Kötü Görsel/Copy</h3>
+                    <ul>
+                        <li>Bulanık fotoğraflar</li>
+                        <li>Stok görsel kullanımı</li>
+                        <li>Generic copy: "En iyi restoran"</li>
+                    </ul>
+                    
+                    <p><strong>Çözüm:</strong> Gerçek yemek fotoğrafları, spesifik value proposition: "Kumkapı'nın tek canlı müzikli balık restoranı"</p>
+                    
+                    <h3>HATA 4: Retargeting Yapmamak</h3>
+                    <p>Web sitenize gelen ama rezervasyon yapmayan kişileri takip edin. %80'i ilk ziyarette dönüşmez. Onları hatırlayın.</p>
+                    
+                    <h3>HATA 5: A/B Test Yapmamak</h3>
+                    <p>2 farklı görsel, 2 farklı copy test edin. Hangisi daha iyi dönüyor? Kötü olanı durdur, iyiye bütçe aktar.</p>
+                    
+                    <h3>Başarılı Bir Meta Ads Kampanya Örneği</h3>
+                    <p>Bütçe: 10.000₺/ay<br>
+                    Hedef: Alsancak, 28-42 yaş, fine dining ilgisi<br>
+                    Kreatif: Video (yemek hazırlık süreci)<br>
+                    CTA: "Rezervasyon Yap"<br>
+                    Sonuç: 145 rezervasyon, ortalama hesap 850₺<br>
+                    → Toplam ciro: 123.250₺<br>
+                    → ROI: 12.3x</p>
+                    
+                    <p><strong>Sonuç:</strong> Meta Ads işe yarar, ama doğru kullanılırsa. Yoksa sadece Meta'yı zengin edersiniz.</p>
+                `
+            },
+            {
+                id: 4,
+                category: "GIDA",
+                title: "Butik Gıda Üreticileri İçin B2B Satış Stratejisi",
+                date: "1 Şubat 2026",
+                author: "Altuğ Çiftelerli",
+                excerpt: "El yapımı, organik, lokal ürününüz var. Ama sadece arkadaşlarınız alıyor. Marketlere nasıl girersiniz? B2B satış adım adım...",
+                body: `
+                    <h3>B2B Satış B2C'den Çok Farklı</h3>
+                    <p>Tüketiciye satış: Hızlı karar, duygusal, küçük miktarlar<br>
+                    İşletmeye satış: Yavaş karar, mantıksal, büyük miktarlar</p>
+                    
+                    <p>Butik gıda üreticileri genelde B2C zihniyetiyle B2B yapmaya çalışır. İşte fark:</p>
+                    
+                    <h3>1. Karar Vericiye Ulaşın</h3>
+                    <p>Migros'un rafına girmek istiyorsunuz. Kime ulaşmalısınız?</p>
+                    <ul>
+                        <li>Kategori müdürü (baklagil, şarküteri, vs)</li>
+                        <li>Satın alma direktörü</li>
+                        <li>Ürün geliştirme ekibi</li>
+                    </ul>
+                    
+                    <p>LinkedIn'de bulun, network event'lere katılın, ortak tanıdık üzerinden ısınma yapın.</p>
+                    
+                    <h3>2. Pitch Deck Hazırlayın</h3>
+                    <p>Market sizden şunu bilmek ister:</p>
+                    <ul>
+                        <li>Ürününüz neden farklı?</li>
+                        <li>Target müşteri kim?</li>
+                        <li>Üretim kapasitesi ne kadar?</li>
+                        <li>Fiyat ve margin ne?</li>
+                        <li>Sertifikalarınız var mı? (ISO, organik, helal vb)</li>
+                    </ul>
+                    
+                    <h3>3. Pilot Mağaza Teklifi</h3>
+                    <p>Tüm mağazalara girmek yerine, pilot 5-10 mağaza önerin. Risk düşük, test imkanı var.</p>
+                    
+                    <h3>4. Trade Marketing Desteği</h3>
+                    <p>Sadece ürün vermek yetmez. Rafta görünürlük lazım:</p>
+                    <ul>
+                        <li>Shelf talker (raf etiketleri)</li>
+                        <li>Tadım günleri</li>
+                        <li>Market içi poster/stand</li>
+                    </ul>
+                    
+                    <h3>5. Alternatif Kanallar</h3>
+                    <p>Büyük marketler zor. Alternatifler:</p>
+                    <ul>
+                        <li>Butik market zincirleri (Makro, Carrefour Gourmet)</li>
+                        <li>Otel/restoran tedariki (HORECA kanalı)</li>
+                        <li>Online gıda platformları (Hepsiburada, Trendyol)</li>
+                        <li>Kurumsal hediye şirketleri</li>
+                    </ul>
+                    
+                    <h3>Gerçek Vaka: Zeytinyağı Üreticisi</h3>
+                    <p>Ürün: Soğuk sıkım, organik, küçük üretici<br>
+                    İlk adım: LinkedIn'den Migros kategori müdürüne ulaştı<br>
+                    Teklif: 10 pilot mağaza, 3 aylık test<br>
+                    Sonuç: İyi satış → 50 mağazaya genişledi<br>
+                    Süreç: 8 ay</p>
+                    
+                    <p><strong>Sonuç:</strong> B2B satış sabır işi. Ama doğru stratejiyle küçük üreticiler büyük kanallara girebilir.</p>
+                `
+            },
+            {
+                id: 5,
+                category: "RESTORAN",
+                title: "Food Cost Kontrolü: Mutfak Atığı Nasıl %50 Azaltılır?",
+                date: "28 Ocak 2026",
+                author: "Murat Dönmez",
+                excerpt: "Food cost'unuz %65 mi? Tebrikler, batıyorsunuz. Sektör ortalaması %28-32. Mutfak atığını kontrol altına almanın 7 yolu...",
+                body: `
+                    <h3>Food Cost Nedir ve Neden Önemli?</h3>
+                    <p>Food cost, satış fiyatının ne kadarının malzeme maliyeti olduğudur.</p>
+                    
+                    <p>Örnek: Bir tabak pasta satıyorsunuz, fiyatı 120₺. Malzeme maliyeti 40₺.<br>
+                    Food cost = 40/120 = %33</p>
+                    
+                    <p><strong>İdeal food cost:</strong> %28-32 (fast casual)<br>
+                    <strong>Fine dining:</strong> %25-28<br>
+                    <strong>Tehlikeli bölge:</strong> %40+</p>
+                    
+                    <h3>1. Portion Control (Porsiyon Kontrolü)</h3>
+                    <p>En büyük kaçak buradan olur. Her şef farklı porsiyon koyar.</p>
+                    
+                    <p><strong>Çözüm:</strong></p>
+                    <ul>
+                        <li>Standart reçete kartları</li>
+                        <li>Ölçekli kepçe/kaşık kullanımı</li>
+                        <li>Her ürün için gram/adet belirtmek</li>
+                    </ul>
+                    
+                    <p>10 gramlık sapma ayda binlerce TL kayıp demektir.</p>
+                    
+                    <h3>2. FIFO (First In, First Out)</h3>
+                    <p>İlk giren ilk çıkar. Eski malzemeleri önce kullan.</p>
+                    
+                    <p>Depoda yeni siparişler önde durursa, arkadaki eskiler bozulur. Bozulan malzeme = çöpe giden para.</p>
+                    
+                    <h3>3. Daily/Weekly Inventory</h3>
+                    <p>Her gün kısa envanter, her hafta detaylı envanter. Ne var, ne bitti, ne bozuldu?</p>
+                    
+                    <p>Excel bile yeter. Yazın, takip edin, analiz edin.</p>
+                    
+                    <h3>4. Menü Engineering ile Atık Azaltma</h3>
+                    <p>Bir malzemeyi 3 farklı tabakta kullanırsanız, atık azalır.</p>
+                    
+                    <p>Örnek: Domates hem salata, hem sos, hem garnish. Tek seferlik kullanım = yüksek fire riski.</p>
+                    
+                    <h3>5. Staff Yemeği Hesaba Katın</h3>
+                    <p>Personel yemeği maliyetinin %3-5'idir. Ama kontrol etmezseniz %10'a çıkar.</p>
+                    
+                    <p>Çözüm: Personel menüsü belirleyin, o günkü fazla/fire ürünlerle hazırlayın.</p>
+                    
+                    <h3>6. Tedarikçi İlişkisi</h3>
+                    <p>Tek tedarikçiye bağımlı olmayın. En az 2-3 tedarikçi karşılaştırın.</p>
+                    
+                    <p>%5 daha ucuz mal bulmanız, aylık binlerce TL tasarruf demek.</p>
+                    
+                    <h3>7. Teknoloji Kullanın</h3>
+                    <ul>
+                        <li>Inventory management software</li>
+                        <li>Recipe costing tools</li>
+                        <li>POS entegrasyonu</li>
+                    </ul>
+                    
+                    <h3>Gerçek Örnek: İzmir'de Bir Bistro</h3>
+                    <p>Başlangıç food cost: %42 (tehlikeli)<br>
+                    Aksiyonlar: Portion control + FIFO + Menü sadeleştirme<br>
+                    6 ay sonra: %29<br>
+                    Aylık tasarruf: 18.000₺</p>
+                    
+                    <p><strong>Sonuç:</strong> Food cost kontrolü sıkıcı ama hayati. Kontrol etmezseniz, sessizce batar gidersiniz.</p>
+                `
+            },
+            {
+                id: 6,
+                category: "PAZARLAMA",
+                title: "Ağızdan Ağıza Pazarlama: En Güçlü (ve Bedava) Strateji",
+                date: "20 Ocak 2026",
+                author: "Altuğ Çiftelerli",
+                excerpt: "Instagram reklamları pahalı. Influencer işbirlikleri riskli. Ama mükemmel bir ürün? Müşteri 10 arkadaşına anlatır. İşte WOM (Word of Mouth) nasıl tetiklenir...",
+                body: `
+                    <h3>Ağızdan Ağıza Pazarlama (WOM) Nedir?</h3>
+                    <p>Word of Mouth (WOM) = Müşterilerin sizden bahsetmesi. Organik, bedava, en güvenilir pazarlama yöntemi.</p>
+                    
+                    <p><strong>İstatistik:</strong> İnsanların %92'si arkadaş tavsiyesine güvenir, reklamlara sadece %33'ü güvenir.</p>
+                    
+                    <h3>WOM Nasıl Tetiklenir?</h3>
+                    <p>Unutmayın: İnsanlar "iyi" deneyimlerden değil, "olağanüstü" veya "berbat" deneyimlerden bahseder.</p>
+                    
+                    <h3>1. Shareable Moments Yaratın</h3>
+                    <p>İnsanların fotoğraf çekmek, story yapmak isteyeceği anlar:</p>
+                    <ul>
+                        <li>Görsel sunum (plating)</li>
+                        <li>Eğlenceli/absürd menü isimleri</li>
+                        <li>Dekorasyon (Instagram wall, neon sign)</li>
+                        <li>Signature içecek (dumanlı kokteyl, alevli desert)</li>
+                    </ul>
+                    
+                    <h3>2. Beklentinin Üzerine Çıkın</h3>
+                    <p>Müşteri 100 bekliyor, 100 verirseniz normal. 120 verirseniz WOM başlar.</p>
+                    
+                    <p>Örnekler:</p>
+                    <ul>
+                        <li>Ücretsiz küçük tatlı (complimentary dessert)</li>
+                        <li>Doğum günü sürprizi (mum, pasta)</li>
+                        <li>Kişiselleştirilmiş not ("Ayşe Hanım, bizi 5. ziyaretinizde onurlandırdınız")</li>
+                    </ul>
+                    
+                    <h3>3. Hikaye Anlatın</h3>
+                    <p>Ürünlerinizin hikayesi olsun. İnsanlar hikaye anlatmayı sever.</p>
+                    
+                    <p>"Burger" yerine → "Annemin 30 yıllık özel baharatlı köfte tarifi"<br>
+                    "Cheesecake" yerine → "New York'tan gelen pastry chef'in imzası"</p>
+                    
+                    <h3>4. Community Oluşturun</h3>
+                    <p>Sadık müşteri kitlesi = organik pazarlama ordusu.</p>
+                    
+                    <ul>
+                        <li>Loyalty program (her 10 kahve 1 bedava)</li>
+                        <li>VIP etkinlikler (yeni menü tadım gecesi)</li>
+                        <li>Referral incentive ("Arkadaşını getir, %20 indirim")</li>
+                    </ul>
+                    
+                    <h3>5. Anında Yanıt Verin</h3>
+                    <p>İnsanlar Google'da yorum yazıyor, Instagram'da etiketliyor. Cevap verin!</p>
+                    
+                    <p>Pozitif yorum → Teşekkür edin<br>
+                    Negatif yorum → Özür dileyin, çözüm önerin</p>
+                    
+                    <p>Cevap vermeniz bile başka müşterilere "bizi önemsiyorlar" mesajı verir.</p>
+                    
+                    <h3>6. Mikro-Influencer'larla Çalışın</h3>
+                    <p>1 milyon takipçili değil, 5 bin takipçili ama engaged olan local influencer'lar daha değerli.</p>
+                    
+                    <p>Onları davet edin, deneyim yaşatın. Organik bahsetmeleri 1 milyon reach'ten daha etkili.</p>
+                    
+                    <h3>WOM'un Karanlık Tarafı</h3>
+                    <p>Kötü deneyim de hızla yayılır. 1 mutlu müşteri 3 kişiye anlatır, 1 mutsuz müşteri 10 kişiye anlatır.</p>
+                    
+                    <p><strong>Çözüm:</strong> Hata yaparsanız (ki yapacaksınız), hemen telafi edin. Özür, çözüm, kompanzasyon.</p>
+                    
+                    <h3>Ölçüm: WOM Nasıl Takip Edilir?</h3>
+                    <ul>
+                        <li>Google "nereden duydunuz?" sorusu (ağızdan duydum %)</li>
+                        <li>Social media mentions tracking</li>
+                        <li>Referral code kullanımı</li>
+                    </ul>
+                    
+                    <p><strong>Sonuç:</strong> En iyi pazarlama, mükemmel ürün + mükemmel hizmet. Gerisi kendiliğinden olur.</p>
+                `
+            }
+        ];
+        
+        // Render posts
+        function renderPosts(filteredPosts = posts) {
+            const grid = document.getElementById('postsGrid');
+            grid.innerHTML = '';
+            
+            filteredPosts.forEach(post => {
+                const card = document.createElement('div');
+                card.className = 'post-card';
+                card.onclick = () => openModal(post.id);
+                
+                card.innerHTML = `
+                    <span class="post-category">${post.category}</span>
+                    <h2>${post.title}</h2>
+                    <div class="post-meta">${post.date} • ${post.author}</div>
+                    <p class="post-excerpt">${post.excerpt}</p>
+                    <a href="#" class="read-more" onclick="event.preventDefault(); openModal(${post.id})">DEVAMINI OKU</a>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+        
+        // Search functionality
+        function searchPosts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = posts.filter(post => 
+                post.title.toLowerCase().includes(searchTerm) ||
+                post.excerpt.toLowerCase().includes(searchTerm) ||
+                post.category.toLowerCase().includes(searchTerm)
+            );
+            renderPosts(filtered);
+        }
+        
+        // Enter key search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchPosts();
+            }
+        });
+        
+        // Modal functions
+        function openModal(postId) {
+            const post = posts.find(p => p.id === postId);
+            const modal = document.getElementById('postModal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <span class="post-category">${post.category}</span>
+                <h2>${post.title}</h2>
+                <div class="post-meta">${post.date} • ${post.author}</div>
+                <div class="post-body">${post.body}</div>
+            `;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('postModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+        
+        // Close modal on background click
+        document.getElementById('postModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Initial render
+        renderPosts();
+    </script>
+</body>
+</html>

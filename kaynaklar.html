@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaynaklar | VÖRK KITCHEN - Ücretsiz Araçlar</title>
+    <meta name="description" content="Restoran sahipleri ve gıda girişimcileri için ücretsiz araçlar, kontrol listeleri ve rehberler.">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --red: #E63946;
+            --black: #000000;
+            --off-white: #F5F5F0;
+            --yellow: #FFD60A;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--off-white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3 { 
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        
+        header {
+            background: var(--black);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--red);
+        }
+        
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            color: var(--yellow);
+            text-decoration: none;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--off-white);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .back-link:hover { color: var(--yellow); }
+        
+        .hero {
+            background: var(--red);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--black);
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        
+        .intro {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .intro h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .intro p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .resource-card {
+            background: white;
+            border: 3px solid var(--black);
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 5px;
+            background: var(--red);
+            transition: left 0.3s ease;
+        }
+        
+        .resource-card:hover::before {
+            left: 0;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 8px 8px 0 var(--black);
+        }
+        
+        .resource-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .resource-badge {
+            display: inline-block;
+            background: var(--yellow);
+            color: var(--black);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            border: 2px solid var(--black);
+        }
+        
+        .resource-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .resource-card p {
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .resource-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: #777;
+        }
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--red);
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: 3px solid var(--black);
+            transition: all 0.3s ease;
+            box-shadow: 4px 4px 0 var(--black);
+            font-size: 0.9rem;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .download-btn:hover {
+            background: var(--yellow);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--black);
+        }
+        
+        .coming-soon {
+            opacity: 0.6;
+            position: relative;
+        }
+        
+        .coming-soon .download-btn {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .coming-soon .download-btn:hover {
+            background: #ccc;
+            transform: none;
+            box-shadow: 4px 4px 0 var(--black);
+        }
+        
+        .cta-section {
+            background: var(--black);
+            color: var(--off-white);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 3px solid var(--red);
+            margin-top: 4rem;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            color: var(--yellow);
+            margin-bottom: 1rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            padding: 1.2rem 2.5rem;
+            background: var(--yellow);
+            color: var(--black);
+            text-decoration: none;
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            border: 3px solid var(--off-white);
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 0 rgba(255,255,255,0.2);
+        }
+        
+        .cta-btn:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 rgba(255,255,255,0.2);
+        }
+        
+        footer {
+            background: var(--black);
+            color: var(--off-white);
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border: 3px solid var(--black);
+            padding: 3rem;
+            max-width: 500px;
+            width: 100%;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            line-height: 1;
+            border: none;
+            background: none;
+            font-weight: 700;
+        }
+        
+        .modal h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .modal p {
+            margin-bottom: 2rem;
+            color: #555;
+        }
+        
+        .modal input {
+            width: 100%;
+            padding: 1rem;
+            border: 3px solid var(--black);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .modal input:focus {
+            outline: none;
+            border-color: var(--red);
+        }
+        
+        .modal button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--yellow);
+            border: 3px solid var(--black);
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .modal button:hover {
+            transform: translateY(-2px);
+            box-shadow: 4px 4px 0 var(--black);
+        }
+        
+        @media (max-width: 768px) {
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">VÖRK KITCHEN</a>
+        <br>
+        <a href="/" class="back-link">← Ana Sayfaya Dön</a>
+    </header>
+    
+    <section class="hero">
+        <h1>ÜCRETSİZ KAYNAKLAR</h1>
+        <p>Restoranlar ve gıda girişimcileri için pratik araçlar, kontrol listeleri ve rehberler.</p>
+    </section>
+    
+    <div class="container">
+        <div class="intro">
+            <h2>İŞİNİZİ BÜYÜTECEK ARAÇLAR</h2>
+            <p>Yıllarca deneyimle edindiğimiz bilgileri sizinle paylaşıyoruz. Tamamen ücretsiz, indirmek için sadece email adresiniz yeterli.</p>
+        </div>
+        
+        <div class="resources-grid">
+            <!-- Resource 1 -->
+            <div class="resource-card">
+                <div class="resource-icon">📋</div>
+                <span class="resource-badge">✓ HAZIR</span>
+                <h3>RESTORAN AÇILIŞ KONTROL LİSTESİ</h3>
+                <div class="resource-meta">
+                    <div class="meta-item">📄 PDF</div>
+                    <div class="meta-item">📊 4 sayfa</div>
+                    <div class="meta-item">⏱️ 5 dk okuma</div>
+                </div>
+                <p>Restoran açılışından önce mutlaka yapılması gerekenler. Konseptten lansmanıza kadar 67 maddelik eksiksiz kontrol listesi.</p>
+                <a href="#" class="download-btn" onclick="openModal('restoran-checklist'); return false;">ÜCRETSİZ İNDİR</a>
+            </div>
+            
+            <!-- Resource 2 -->
+            <div class="resource-card">
+                <div class="resource-icon">📖</div>
+                <span class="resource-badge">✓ HAZIR</span>
+                <h3>GIDA GİRİŞİMCİLERİ İÇİN MARKA REHBERİ</h3>
+                <div class="resource-meta">
+                    <div class="meta-item">📄 PDF</div>
+                    <div class="meta-item">📊 12 sayfa</div>
+                    <div class="meta-item">⏱️ 15 dk okuma</div>
+                </div>
+                <p>Butik gıda üreticileri için markalaşma kılavuzu. Hikaye anlatımından ambalaj tasarımına kadar 6 aşamalı rehber.</p>
+                <a href="#" class="download-btn" onclick="openModal('brand-guide'); return false;">ÜCRETSİZ İNDİR</a>
+            </div>
+            
+            <!-- Resource 3 -->
+            <div class="resource-card">
+                <div class="resource-icon">💰</div>
+                <span class="resource-badge">✓ HAZIR</span>
+                <h3>KÂR-ZARAR HESAPLAMA ŞABLONU</h3>
+                <div class="resource-meta">
+                    <div class="meta-item">📊 EXCEL</div>
+                    <div class="meta-item">🧮 Otomatik</div>
+                    <div class="meta-item">⏱️ Kullanıma hazır</div>
+                </div>
+                <p>Restoran ve kafe sahipleri için Excel şablonu. Food cost, personel maliyeti ve operasyonel giderleri otomatik hesaplayan araç.</p>
+                <a href="#" class="download-btn" onclick="openModal('profit-calculator'); return false;">ÜCRETSİZ İNDİR</a>
+            </div>
+            
+            <!-- Resource 4 -->
+            <div class="resource-card">
+                <div class="resource-icon">🍽️</div>
+                <span class="resource-badge">✓ HAZIR</span>
+                <h3>MENÜ MÜHENDİSLİĞİ GİRİŞ REHBERİ</h3>
+                <div class="resource-meta">
+                    <div class="meta-item">📄 PDF</div>
+                    <div class="meta-item">📊 8 sayfa</div>
+                    <div class="meta-item">⏱️ 10 dk okuma</div>
+                </div>
+                <p>Menünüzü daha karlı hale getirin. Star-Dog-Puzzle-Plow analizi, fiyatlandırma psikolojisi ve prime space kullanımı.</p>
+                <a href="#" class="download-btn" onclick="openModal('menu-engineering'); return false;">ÜCRETSİZ İNDİR</a>
+            </div>
+            
+            <!-- Resource 5 -->
+            <div class="resource-card">
+                <div class="resource-icon">📱</div>
+                <span class="resource-badge">✓ HAZIR</span>
+                <h3>SOSYAL MEDYA İÇERİK TAKVİMİ</h3>
+                <div class="resource-meta">
+                    <div class="meta-item">📊 EXCEL</div>
+                    <div class="meta-item">📅 30 gün</div>
+                    <div class="meta-item">⏱️ Kullanıma hazır</div>
+                </div>
+                <p>Restoranlar için 30 günlük içerik planlama şablonu. 90 post fikri, hashtag önerileri ve yayın zamanlaması dahil.</p>
+                <a href="#" class="download-btn" onclick="openModal('social-calendar'); return false;">ÜCRETSİZ İNDİR</a>
+            </div>
+            
+            <!-- Resource 6 - Coming Soon -->
+            <div class="resource-card coming-soon">
+                <div class="resource-icon">🚀</div>
+                <span class="resource-badge" style="background: #ccc;">YAKINDA</span>
+                <h3>STARTUP GTM STRATEJİ ŞABLONu</h3>
+                <div class="resource-meta">
+                    <div class="meta-item">📊 NOTION</div>
+                    <div class="meta-item">🎯 6 adım</div>
+                    <div class="meta-item">⏱️ Yakında</div>
+                </div>
+                <p>Yeni kurulan şirketler için pazara giriş stratejisi şablonu. ICP belirleme, mesaj çerçevesi ve kanal planlaması.</p>
+                <a href="#" class="download-btn" onclick="return false;">YAKINDA</a>
+            </div>
+        </div>
+    </div>
+    
+    <section class="cta-section">
+        <h2>DAHA FAZLA DESTEK LAZIM MI?</h2>
+        <p>Bu araçlar size yardımcı oldu mu? Projeniz için özel danışmanlık alın.</p>
+        <a href="/hizli-teklif.html" class="cta-btn">ÜCRETSİZ TEKLİF AL</a>
+    </section>
+    
+    <footer>
+        <p>© 2026 VÖRK KITCHEN | Marka Mühendisliği</p>
+    </footer>
+    
+    <!-- Download Modal -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h3>İNDİRMEK İÇİN EMAIL ADRESİNİZ</h3>
+            <p>Dosyayı email adresinize göndereceğiz. Spam yok, sadece kaynak.</p>
+            <form id="downloadForm" action="https://formsubmit.co/el/gehozu" method="POST">
+                <input type="hidden" name="_subject" value="VÖRK - Kaynak İndirme Talebi">
+                <input type="hidden" name="_template" value="table">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="resource" id="resourceName">
+                <input type="email" name="email" placeholder="E-posta adresiniz" required>
+                <input type="text" name="name" placeholder="Adınız (opsiyonel)">
+                <button type="submit">GÖNDER VE İNDİR</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal(resourceId) {
+            const resourceNames = {
+                'restoran-checklist': 'Restoran Açılış Kontrol Listesi',
+                'brand-guide': 'Gıda Girişimcileri Marka Rehberi',
+                'profit-calculator': 'Kâr-Zarar Hesaplama Şablonu',
+                'menu-engineering': 'Menü Mühendisliği Giriş Rehberi',
+                'social-calendar': 'Sosyal Medya İçerik Takvimi'
+            };
+            
+            document.getElementById('resourceName').value = resourceNames[resourceId] || resourceId;
+            document.getElementById('downloadModal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('downloadModal').classList.remove('active');
+        }
+        
+        // Close modal on background click
+        document.getElementById('downloadModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+        
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

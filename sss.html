@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSS | VÖRK KITCHEN - Sıkça Sorulan Sorular</title>
+    <meta name="description" content="VÖRK Kitchen hizmetleri, fiyatlandırma, süreç ve işbirliği hakkında sıkça sorulan sorular.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --red: #E63946;
+            --black: #000000;
+            --off-white: #F5F5F0;
+            --yellow: #FFD60A;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--off-white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Archivo Black', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+        
+        /* Header */
+        header {
+            background: var(--black);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--red);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 2rem;
+            color: var(--yellow);
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: var(--off-white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        .back-link:hover {
+            color: var(--yellow);
+        }
+        
+        /* Hero */
+        .faq-hero {
+            background: var(--red);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-bottom: 3px solid var(--black);
+        }
+        
+        .faq-hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: var(--black);
+            margin-bottom: 1rem;
+        }
+        
+        .faq-hero p {
+            font-size: 1.2rem;
+            color: var(--black);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* FAQ Categories */
+        .faq-categories {
+            padding: 3rem 2rem 1rem;
+            background: var(--off-white);
+        }
+        
+        .category-tabs {
+            display: flex;
+            gap: 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .category-tab {
+            padding: 0.8rem 1.5rem;
+            background: transparent;
+            color: var(--black);
+            border: 2px solid var(--black);
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .category-tab:hover,
+        .category-tab.active {
+            background: var(--red);
+            color: var(--black);
+            transform: translateY(-3px);
+            box-shadow: 4px 4px 0 var(--black);
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            padding: 2rem 2rem 4rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            border: 3px solid var(--black);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .faq-item:hover {
+            transform: translateX(5px);
+            box-shadow: 8px 8px 0 var(--black);
+        }
+        
+        .faq-item.active {
+            border-color: var(--red);
+        }
+        
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .faq-icon {
+            font-size: 1.5rem;
+            color: var(--red);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 1.5rem;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 1000px;
+            padding: 0 1.5rem 1.5rem;
+            border-top: 2px solid var(--red);
+        }
+        
+        .faq-answer p {
+            margin-bottom: 1rem;
+        }
+        
+        .faq-answer ul {
+            margin: 1rem 0 1rem 2rem;
+        }
+        
+        .faq-answer li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .faq-answer strong {
+            color: var(--red);
+        }
+        
+        /* CTA Section */
+        .faq-cta {
+            background: var(--black);
+            padding: 4rem 2rem;
+            text-align: center;
+            border-top: 3px solid var(--red);
+        }
+        
+        .faq-cta h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            color: var(--yellow);
+            margin-bottom: 1rem;
+        }
+        
+        .faq-cta p {
+            color: var(--off-white);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-btn {
+            padding: 1.2rem 2.5rem;
+            text-decoration: none;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1rem;
+            text-transform: uppercase;
+            border: 3px solid var(--black);
+            transition: all 0.3s ease;
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.3);
+            display: inline-block;
+        }
+        
+        .cta-btn-primary {
+            background: var(--yellow);
+            color: var(--black);
+        }
+        
+        .cta-btn-primary:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.3);
+        }
+        
+        .cta-btn-secondary {
+            background: var(--red);
+            color: var(--black);
+        }
+        
+        .cta-btn-secondary:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.3);
+            background: var(--yellow);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: var(--off-white);
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Category visibility */
+        .faq-item[data-category] {
+            display: block;
+        }
+        
+        .faq-item[data-category].hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .category-tabs {
+                flex-direction: column;
+            }
+            
+            .category-tab {
+                width: 100%;
+            }
+            
+            .faq-question {
+                font-size: 1rem;
+                padding: 1.2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .cta-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/" class="logo">VÖRK KITCHEN</a>
+        <a href="/" class="back-link">← Ana Sayfaya Dön</a>
+    </header>
+    
+    <section class="faq-hero">
+        <h1>SIKÇA SORULAN SORULAR</h1>
+        <p>Merak ettikleriniz, işbirliği süreci, fiyatlandırma ve daha fazlası</p>
+    </section>
+    
+    <section class="faq-categories">
+        <div class="category-tabs">
+            <button class="category-tab active" data-category="all">TÜMÜ</button>
+            <button class="category-tab" data-category="genel">GENEL</button>
+            <button class="category-tab" data-category="hizmet">HİZMETLER</button>
+            <button class="category-tab" data-category="surec">SÜREÇ</button>
+            <button class="category-tab" data-category="fiyat">ÜCRET</button>
+        </div>
+    </section>
+    
+    <section class="faq-section" id="faqContainer">
+        <!-- GENEL SORULAR -->
+        <div class="faq-item" data-category="genel">
+            <div class="faq-question">
+                VÖRK Kitchen nedir, ne yapar?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>VÖRK Kitchen, restoranlar, yeni kurulan şirketler ve butik gıda üreticileri için <strong>marka mühendisliği ve büyüme pazarlaması</strong> yapan bir ekip.</p>
+                <p>Farkımız: Uluslararası ajans deneyimi + gerçek mutfak ve operasyon bilgisi. Sadece güzel logo ve kampanya değil, <strong>kârlı büyüme</strong> odaklıyız.</p>
+                <p>Ekibimizde pazarlama yöneticileri, executive şefler, kokteyl uzmanları ve büyüme uzmanları var. Hem markalaşmayı biliyoruz, hem mutfağın sıcağında çalışmayı.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="genel">
+            <div class="faq-question">
+                Kimlerle çalışıyorsunuz?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>3 ana müşteri grubumuz var:</p>
+                <ul>
+                    <li><strong>Restoranlar ve Yiyecek-İçecek İşletmeleri:</strong> Yeni açılacak veya yenilenecek restoranlar, kafe'ler, barlar</li>
+                    <li><strong>Yeni Kurulan Şirketler:</strong> Gıda teknolojisi, teslimat hizmetleri, hayalet mutfak, yenilikçi gıda ürünleri</li>
+                    <li><strong>Butik Gıda Üreticileri:</strong> Yerel, organik, el yapımı üreticiler (zeytinyağı, reçel, çikolata gibi)</li>
+                </ul>
+                <p>Ortak özellikleri: Kaliteye önem veren, büyümek isteyen, samimi olmayan pazarlamadan sıkılmış markalar.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="genel">
+            <div class="faq-question">
+                Diğer ajanslardan farkınız nedir?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p><strong>Çoğu ajans:</strong> Güzel kampanyalar, ödüllü işler yapıyor. Peki sonuç?</p>
+                <p><strong>VÖRK'ün farkı:</strong></p>
+                <ul>
+                    <li>Ekibimizde gerçek şefler ve işletme uzmanları var</li>
+                    <li>8 restoran açıp kapattık - hatalarımızdan öğrendik</li>
+                    <li>Maliyet kontrolü, menü mühendisliği, fiyatlandırma psikolojisi biliyoruz</li>
+                    <li>Sadece yaratıcı değil, <strong>karlılık odaklıyız</strong></li>
+                    <li>Verilere dayalı çalışırız, "bence" demeyiz</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- HİZMET SORULARI -->
+        <div class="faq-item" data-category="hizmet">
+            <div class="faq-question">
+                Restoran açıyorum, nereden başlamalıyım?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Restoran açmak sadece iyi yemek yapmak değil. Eksiksiz bir süreç:</p>
+                <ul>
+                    <li><strong>1. Konsept:</strong> Kim için, neden, nasıl bir deneyim sunacaksınız?</li>
+                    <li><strong>2. Marka kimliği:</strong> İsim, logo, görsel dil</li>
+                    <li><strong>3. Menü tasarımı:</strong> Maliyet kontrolü, fiyatlandırma, menü mühendisliği</li>
+                    <li><strong>4. Müşteri deneyimi:</strong> Servis akışı, temas noktaları</li>
+                    <li><strong>5. Açılış:</strong> Ön açılış, deneme açılışı, büyük açılış kampanyası</li>
+                </ul>
+                <p>Bizimle çalışırsanız, tüm bu adımları <strong>1-2 ay</strong> içinde tamamlarız.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="hizmet">
+            <div class="faq-question">
+                Sadece menü tasarımı yaptırabilir miyim?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Evet! Menü tasarımı tek başına alınabilir. Ama biz sadece "güzel görünen" değil, <strong>satan</strong> bir menü yapıyoruz:</p>
+                <ul>
+                    <li>Menü matris analizi (hangi ürün ne kadar satıyor, ne kadar kazandırıyor)</li>
+                    <li>Çapa fiyatlandırma ve yönlendirme stratejileri</li>
+                    <li>En değerli alan kullanımı (göze ilk çarpan yerler)</li>
+                    <li>Psikolojik fiyatlandırma</li>
+                    <li>Maliyet kontrolü</li>
+                </ul>
+                <p>Süre: 2-3 hafta. Ücret için görüşme gerekir.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="hizmet">
+            <div class="faq-question">
+                Yeni şirket kurdum, pazara giriş stratejisi lazım. Nasıl çalışırız?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Pazara giriş stratejisi olmadan ürün lansmanı yapmak, haritasız okyanusta yüzmek gibi.</p>
+                <p><strong>Bizim sürecimiz:</strong></p>
+                <ul>
+                    <li><strong>Hafta 1:</strong> İdeal müşteri belirleme, pazar analizi</li>
+                    <li><strong>Hafta 2:</strong> Konumlandırma ve mesaj çerçevesi</li>
+                    <li><strong>Hafta 3:</strong> Kanal stratejisi (hangi kanalda nasıl konuşacağız?)</li>
+                    <li><strong>Hafta 4:</strong> Lansman yol haritası ve ölçüm sistemi</li>
+                </ul>
+                <p>Sonra 3 ay boyunca <strong>uygulama ve iyileştirme</strong> yapıyoruz.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="hizmet">
+            <div class="faq-question">
+                İnternet reklamları (sosyal medya, arama motoru) yapıyor musunuz?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Evet. Ama "reklam ver, para yak" değil, <strong>veriye dayalı kampanyalar</strong>.</p>
+                <p>Yaklaşımımız:</p>
+                <ul>
+                    <li>İlk ay: Test ve öğren (küçük bütçe, çok çeşit)</li>
+                    <li>İkinci ay: İyileştir (çalışanı büyüt, çalışmayanı durdur)</li>
+                    <li>Üçüncü ay: Büyüt (kazanan kampanyalara bütçe artır)</li>
+                </ul>
+                <p>Geri dönüş odaklıyız. Eğer kazandırmıyorsa durdurup analiz ederiz.</p>
+            </div>
+        </div>
+
+        <!-- SÜREÇ SORULARI -->
+        <div class="faq-item" data-category="surec">
+            <div class="faq-question">
+                İşbirliği süreci nasıl ilerler?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p><strong>Adım 1: Keşif Görüşmesi (30 dakika, ücretsiz)</strong><br>
+                İhtiyaçlarınızı dinleriz, size uygun olup olmadığımıza bakarız.</p>
+                
+                <p><strong>Adım 2: Teklif ve Zaman Planı (3 gün)</strong><br>
+                Detaylı teklif, zaman çizelgesi ve ücret gönderilir.</p>
+                
+                <p><strong>Adım 3: Başlangıç Toplantısı</strong><br>
+                Sözleşme imzalandıktan sonra, 2 saatlik başlangıç toplantısı. Tüm bilgiler toplanır.</p>
+                
+                <p><strong>Adım 4: Uygulama (1-3 ay)</strong><br>
+                Haftalık kontroller, kilometre taşı sunumları.</p>
+                
+                <p><strong>Adım 5: Teslim</strong><br>
+                Tüm dosyalar, belgeler, erişimler teslim edilir.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="surec">
+            <div class="faq-question">
+                Ne kadar sürer?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Projeye göre değişir:</p>
+                <ul>
+                    <li><strong>Menü tasarımı:</strong> 2-3 hafta</li>
+                    <li><strong>Markalaşma (logo, kimlik):</strong> 3-4 hafta</li>
+                    <li><strong>Restoran lansmanı (tam paket):</strong> 6-8 hafta</li>
+                    <li><strong>Pazara giriş stratejisi:</strong> 4 hafta strateji + 3 ay uygulama</li>
+                    <li><strong>Dijital kampanya kurulumu:</strong> 2 hafta</li>
+                </ul>
+                <p>Acil projeler için <strong>hızlı teslimat</strong> seçeneği var (ek ücret ile).</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="surec">
+            <div class="faq-question">
+                Sadece İzmir'de mi çalışıyorsunuz?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Hayır! Uzaktan çalışma konusunda çok deneyimliyiz.</p>
+                <p><strong>Türkiye geneli:</strong> Tüm şehirlerde proje alıyoruz. Gerekirse yerinde ziyaret yapıyoruz (ulaşım müşteriye ait).</p>
+                <p><strong>Yurtdışı:</strong> İngiltere, Almanya, Hollanda'da projelerimiz var. Görüntülü görüşme üzerinden sorunsuz çalışıyoruz.</p>
+            </div>
+        </div>
+
+        <!-- ÜCRET SORULARI -->
+        <div class="faq-item" data-category="fiyat">
+            <div class="faq-question">
+                Ücretler ne kadar?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Her proje farklı olduğu için, ücretlendirme <strong>ihtiyaçlarınıza özel</strong> belirlenir.</p>
+                <p><strong>Ücret neye bağlı?</strong></p>
+                <ul>
+                    <li>Projenin kapsamı (sadece menü mü, yoksa tam paket mi?)</li>
+                    <li>Süre (2 hafta mı, 3 ay mı?)</li>
+                    <li>Karmaşıklık (basit bir kafe mi, çok şubeli restoran zinciri mi?)</li>
+                    <li>Aciliyet (normal teslimat mı, hızlı teslimat mı?)</li>
+                </ul>
+                <p>Keşif görüşmesinden sonra, <strong>size özel net fiyat teklifi</strong> hazırlıyoruz.</p>
+                <p>Şeffaf fiyatlandırma yapıyoruz - gizli maliyet yok.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="fiyat">
+            <div class="faq-question">
+                Ödeme nasıl yapılır?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Genellikle <strong>3 taksit:</strong></p>
+                <ul>
+                    <li>%40: İş başlangıcında</li>
+                    <li>%40: Projenin yarısında</li>
+                    <li>%20: Teslim sırasında</li>
+                </ul>
+                <p>Küçük projeler: %50 başlangıç, %50 teslim</p>
+                <p>Aylık danışmanlıklar: Her ayın ilk günü fatura kesilir.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="fiyat">
+            <div class="faq-question">
+                Minimum bütçe var mı?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Evet. Kaliteli iş yapabilmek için minimum bütçe gerekiyor.</p>
+                <p>Çok küçük bütçeli projeler için maalesef ekip kaynaklarımız yetmiyor. Bunun yerine önce biraz büyümenizi, sonra tekrar görüşmemizi öneriyoruz.</p>
+                <p>Bütçeniz sınırlıysa, daha küçük başlayabiliriz: Sadece logo, sadece menü kapağı gibi kısmi işlerle başlayıp zamanla genişletebiliriz.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="genel">
+            <div class="faq-question">
+                Daha önce kimlere hizmet verdiniz?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Ekip üyelerimiz toplamda 21 global markayla çalıştı:</p>
+                <p>Coca-Cola, Migros, Ford, Vodafone, Ülker, PepsiCo, Burn, Volvo, QNB, Nissan, Volkswagen, Durex, Vestel, Petrol Ofisi, Optimum Nutrition, Faber-Castell, Cotex, Power FM, Lezita, Simit Sarayı, Hillside.</p>
+                <p>VÖRK Kitchen olarak yeni projelerimiz var ama henüz vaka çalışması yayınlamadık (gizlilik anlaşması nedeniyle). Yakında yayınlayacağız.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="surec">
+            <div class="faq-question">
+                Proje başladıktan sonra fikrim değişirse ne olur?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Normal! Herkesin fikri değişir. Biz de 3 şirket kurduk, hepsi yön değiştirdi.</p>
+                <p><strong>Revizyon politikamız:</strong></p>
+                <ul>
+                    <li>Her aşamada <strong>2 kez revizyon</strong> hakkı var</li>
+                    <li>Küçük değişiklikler: Ücretsiz</li>
+                    <li>Büyük yön değişikliği: Ek ücret + süre uzaması</li>
+                </ul>
+                <p>Önemli: Stratejik kararlar değişirse (hedef kitle, konumlandırma gibi), yeni talep gerekir ve ek maliyeti olur.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="hizmet">
+            <div class="faq-question">
+                Sadece danışmanlık alabilir miyim? (Siz yapmadan)
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Evet, <strong>yarı zamanlı pazarlama yöneticiliği</strong> hizmetimiz var.</p>
+                <p>Biz strateji yapıyoruz, siz kendi ekibinizle uyguluyorsunuz.</p>
+                <p><strong>Nasıl çalışır:</strong></p>
+                <ul>
+                    <li>Haftada 1 toplantı (1-2 saat)</li>
+                    <li>Haftalık strateji notları</li>
+                    <li>Mesajlaşma üzerinden danışma</li>
+                    <li>Kriz anlarında anında destek</li>
+                </ul>
+                <p>Detaylar için görüşmemiz gerekir.</p>
+            </div>
+        </div>
+
+        <div class="faq-item" data-category="genel">
+            <div class="faq-question">
+                Neden VÖRK Kitchen ismini seçtiniz?
+                <span class="faq-icon">+</span>
+            </div>
+            <div class="faq-answer">
+                <p><strong>VÖRK</strong> = İskandinav dillerinde "iş, çalışma, eser" anlamına gelir.</p>
+                <p><strong>Kitchen</strong> = Her şeyin hazırlandığı, piştiği, yaratıldığı yer. Mutfak.</p>
+                <p>Biz markaları mutfakta, ateşin başında, operasyonun içinde yaratıyoruz. Sadece ofiste toplantı değil, sahada iş yapıyoruz.</p>
+                <p>İşin mutfağından geliyoruz, işin mutfağında çalışıyoruz.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="faq-cta">
+        <h2>CEVAP BULAMADIN MI?</h2>
+        <p>Bizimle iletişime geç, her sorunuza cevap verelim.</p>
+        <div class="cta-buttons">
+            <a href="/#form" class="cta-btn cta-btn-primary">BAŞVURU FORMU</a>
+            <a href="/" class="cta-btn cta-btn-secondary">ANA SAYFA</a>
+        </div>
+    </section>
+    
+    <footer>
+        <p>© 2026 VÖRK KITCHEN | Marka Mühendisliği</p>
+    </footer>
+
+    <script>
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all items
+                faqItems.forEach(i => i.classList.remove('active'));
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Category Filter
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.dataset.category;
+                
+                // Update active tab
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Filter items
+                faqItems.forEach(item => {
+                    if (category === 'all') {
+                        item.classList.remove('hidden');
+                    } else {
+                        if (item.dataset.category === category) {
+                            item.classList.remove('hidden');
+                        } else {
+                            item.classList.add('hidden');
+                            item.classList.remove('active');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
